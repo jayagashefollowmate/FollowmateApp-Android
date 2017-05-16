@@ -1,0 +1,42 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.inscripts.cometchat_sdkdemo.UsersList" >
+
+    <item
+        android:id="@+id/action_unblock_user"
+        android:orderInCategory="100"
+        android:title="Unblock User"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_broadcast_message"
+        android:orderInCategory="100"
+        android:title="Broadcast message"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_createuser"
+        android:orderInCategory="100"
+        android:title="Create user"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_removeuser"
+        android:orderInCategory="100"
+        android:title="Remove user"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_updateuser"
+        android:orderInCategory="100"
+        android:title="Update user"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_addFriend"
+        android:orderInCategory="100"
+        android:title="Add friends"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_removefriend"
+        android:orderInCategory="100"
+        android:title="Remove friends"
+        app:showAsAction="never"/>
+
+</menu>

@@ -1,0 +1,112 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'followmate'
+            keyPassword 'followmate'
+            storeFile file('/var/Snehal/Android Workspace/FollowMate/FollowmateLatestWithCustomChat/23Nov2016CustomUICompleted/FollowmateApp/followmate_release_keystore.jks')
+            storePassword 'followmate'
+        }
+    }
+    compileSdkVersion 23
+    //buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.1"
+    defaultConfig {
+        applicationId "com.terracotta.followmateapp"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 6
+        versionName "6.0"
+        multiDexEnabled true
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"  //specify the heap size for the dex process
+        preDexLibraries = false
+        incremental true
+    }
+    //to stop aborting the generation of signed apk due to lint error
+    lintOptions {
+        abortOnError false
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+
+        exclude '/appcompat/res/drawable-xxhdpi/abc_ic_clear_mtrl_alpha.png'
+
+    }
+    useLibrary 'org.apache.http.legacy'
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //for GCM (Google Cloud Messaging)
+    compile files('libs/gcm.jar')
+    //for GCM (Google Cloud Messaging)
+    //for google mape
+    //compile 'com.google.android.gms:play-services:8.4.0'
+    compile files('libs/gcm.jar')
+    // compile 'org.apache.httpcomponents:httpcore:4.3.2'
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    compile('com.parse:parse-android:1.12.0') {
+        exclude group: 'com.parse.bolts', module: 'bolts-tasks';
+
+    }
+    compile project(':cometchat-sdk')
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:support-v4:23.0.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+    compile 'com.google.maps.android:android-maps-utils:+'
+    compile 'com.google.android.gms:play-services-gcm:10.0.1'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
+    compile 'com.google.android.gms:play-services-location:10.0.1'
+    compile 'com.google.android.gms:play-services-ads:10.0.1'
+    compile 'com.google.android.gms:play-services-auth:10.0.1'
+    compile 'org.apache.httpcomponents:httpclient:4.5'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile 'com.github.clans:fab:1.6.2'
+    compile 'org.jsoup:jsoup:1.8.1'
+    compile 'cn.pedant.sweetalert:library:1.3'
+    compile 'org.apache.httpcomponents:httpmime:4.3.3'
+    compile 'com.commit451:PhotoView:1.2.4'
+    compile 'com.splitwise:tokenautocomplete:1.3.3'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:support-v4:20.0+'
+}
+
+apply plugin: 'com.google.gms.google-services'

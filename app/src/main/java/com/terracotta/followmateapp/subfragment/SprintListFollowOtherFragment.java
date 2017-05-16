@@ -1,0 +1,1172 @@
+package com.terracotta.followmateapp.subfragment;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
+import com.terracotta.followmateapp.model.ContactListOtherModel;
+import com.terracotta.followmateapp.model.MarkerPointsModel;
+import com.terracotta.followmateapp.model.SprintListMeModel;
+import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.utility.ConnectionDetector;
+import com.terracotta.followmateapp.utility.Constants;
+import com.terracotta.followmateapp.utility.SessionManager;
+import com.terracotta.followmateapp.adapter.SprintListOtherAdapter;
+import com.terracotta.followmateapp.fragment.FollowFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class SprintListFollowOtherFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+    private View view;
+    @Bind(R.id.imageview_add_sprint_follow_other)
+    LinearLayout imageview_add_sprint_follow_other;
+    @Bind(R.id.listview_sprint_follow_other)
+    ListView listview_sprint_follow_other;
+    @Bind(R.id.txtview_noSprint)
+    TextView txtview_noSprint;
+
+    SessionManager mSessionManager;
+    private Activity mActivity;
+    MessageFragmentDialog messageFragmentDialog;
+
+    String message = null;
+    ContactListOtherModel contactListModelOther;
+    MarkerPointsModel markerPointsModel;
+    boolean ISEMPTY = false;
+    UnFollowConfirmationDialog unFollowConfirmationDialog;
+
+    //ProgressDialog pDialog;
+    //font
+    Typeface roboto;
+    String TAG = "FollowMate";
+    SprintListOtherAdapter sprintListOtherAdapter;
+    ArrayList<SprintListMeModel> SprintMainArrayList = new ArrayList<SprintListMeModel>();
+
+    static OnFragmentInteractionListenerFollowOther mListener;
+    static FollowFragment msprintFragment;
+    RequestQueue queue;
+
+    ProgressDialog mProgressDialog;
+
+    List<SprintListMeModel.Sprint_data> arraylistsprintdata;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+
+        }
+    }
+
+
+    public static SprintListFollowOtherFragment newInstance(FollowFragment sprintFragment) {
+        msprintFragment = sprintFragment;
+        try {
+            mListener = (OnFragmentInteractionListenerFollowOther) msprintFragment;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(msprintFragment.toString()
+                    + " must implement OnDashboardFragmentInteractionListener");
+        }
+        SprintListFollowOtherFragment sprintListFollowOtherFragment = new SprintListFollowOtherFragment();
+        return sprintListFollowOtherFragment;
+    }
+
+    public SprintListFollowOtherFragment() {
+
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_sprint_list_follow_other, container, false);
+        ButterKnife.bind(this, view);
+        mSessionManager = new SessionManager(getActivity());
+        mSessionManager.putStringData(Constants.LAST_VISITED, Constants.ACTIVITY_SPRINT_LIST_OTHER);
+        listview_sprint_follow_other.setOnItemClickListener(this);
+        queue = Volley.newRequestQueue(getActivity());
+        Constants.WHICH_CONTACT_LIST = "SprintListFollowOther";
+        setFont();
+
+        if (getActivity() != null) {
+
+
+            mSessionManager.putStringData(Constants.ADDFOLLOWOTHERSTATUS, "OFF");
+
+            ConnectionDetector mConnectionDetector = new ConnectionDetector(getActivity());
+            if (mConnectionDetector.isConnectingToInternet()) {
+                Log.e("Pratibha", "Pratibha " + "oncreate");
+                callListWebService();
+            } else {
+                Toast.makeText(getActivity(), "No internet Connection Available", Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+        return view;
+    }
+
+
+    private void setFont() {
+        //font
+        roboto = Typeface
+                .createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+        txtview_noSprint.setTypeface(roboto);
+
+
+    }
+
+    @OnClick(R.id.imageview_add_sprint_follow_other)
+    public void AddSpint() {
+        Constants.arraylist_old_toCrossCheckStatus_other.clear();
+        Constants.arrayList_SelectedContactList_other.clear();
+
+        //  OpenAddSprintFollowOtherFragment();
+        Constants.arrayList_SelectedContactList.clear();
+        Constants.arrayList_ContactList_other.clear();
+
+
+        Log.e("StatusIssue", "StatusIssue " + "arrayList_SelectedContactList_other,arrayList_SelectedContactList,arrayList_ContactList_other Cleared in Sprint List Add Sprint");
+        mListener.onFragmentInteractionFollowOther();
+        mSessionManager.putStringData(Constants.ADDFOLLOWOTHERSTATUS, "ON");
+        mSessionManager.putStringData(Constants.SPRINT_ID_OTHER, "");
+
+        mSessionManager.putStringData(Constants.USER_Activity_other, "");
+        mSessionManager.putStringData(Constants.USER_START_TIME_other, "");
+        mSessionManager.putStringData(Constants.USER_END_TIME_other, "");
+        mSessionManager.putStringData(Constants.USER_DURATION_other, "");
+        mSessionManager.putStringData(Constants.SPRINT_ID_OTHER, "");
+
+    }
+
+
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
+        if (visible) {
+            //Do the Stuf only if fragment is visible
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = activity;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        Log.e("In onItemClick", "In onItemClick");
+
+
+        if (SprintMainArrayList.get(position).getlistsprintdata().get(position).getSprint_created_by().equals(mSessionManager.getStringData(Constants.USER_ID))) {
+            if (SprintMainArrayList.get(position).getlistsprintdata().get(position).getStatus().equals("0")) {
+                callReadAllSprintdata(SprintMainArrayList.get(position).getlistsprintdata().get(position).getSprintID());
+
+            } else if (SprintMainArrayList.get(position).getlistsprintdata().get(position).getStatus().equals("1")) {
+                Toast.makeText(getActivity(), "Active or expired sprint cannot be modified", Toast.LENGTH_LONG).show();
+            } else if (SprintMainArrayList.get(position).getlistsprintdata().get(position).getStatus().equals("2")) {
+                Toast.makeText(getActivity(), "Active or expired sprint cannot be modified", Toast.LENGTH_LONG).show();
+            }
+        } else {
+
+            unFollowConfirmationDialog = new UnFollowConfirmationDialog(
+                    position, SprintMainArrayList.get(position).getlistsprintdata().get(position).getSprint_created_by(), SprintMainArrayList.get(position).getlistsprintdata().get(position).getSprintID());
+            unFollowConfirmationDialog.show(getActivity().getFragmentManager(),
+                    "dialog");
+            unFollowConfirmationDialog.setCancelable(false);
+        }
+
+
+    }
+
+
+    // Dialog for confirmation of delete
+    public class UnFollowConfirmationDialog extends android.app.DialogFragment {
+
+        int pos;
+        String createdby, sprintid;
+
+        public UnFollowConfirmationDialog(int pos, String createdby, String sprintid) {
+            this.pos = pos;
+            this.createdby = createdby;
+            this.sprintid = sprintid;
+
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            //font
+            roboto = Typeface
+                    .createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View convertview = inflater.inflate(R.layout.dialog_unfollow_confirmation,
+                    null);
+
+            TextView textview_title = (TextView) convertview
+                    .findViewById(R.id.cofirmation_message_textview);
+            Button button_ok = (Button) convertview
+                    .findViewById(R.id.button_positive);
+            Button button_cancel = (Button) convertview
+                    .findViewById(R.id.button_negative);
+
+            button_ok.setTypeface(roboto);
+            button_cancel.setTypeface(roboto);
+            textview_title.setTypeface(roboto);
+            textview_title.setText(getResources().getString(
+                    R.string.confirm_unfollow_list));
+            button_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+
+                    CallUnfollowUserWebService(pos, createdby, sprintid);
+                }
+
+            });
+            button_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
+            builder.setView(convertview);
+            return builder.create();
+        }
+    }
+
+
+    private void CallUnfollowUserWebService(final int pos, final String createdby, final String sprintid) {
+
+
+        //lockScreenOrientation();
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        // Tag used to cancel the request
+
+        String url = Constants.URL_UNFOLLOW_SELF;
+
+        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("unfollowing user...");
+        pDialog.show();
+
+        StringRequest mstringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // mPostCommentResponse.requestCompleted();
+                Log.e(TAG, "Service--o/p-" + response);
+                JSONArray jarray;
+                JSONObject job;
+
+
+                try {
+                    if (getActivity() != null) {
+                        if ((pDialog != null) && pDialog.isShowing()) {
+                            pDialog.dismiss();
+                        }
+                    }
+                    // jarray = new JSONArray(response);
+                    job = new JSONObject(response);
+
+                    message = job.getString("message");
+                    String ISSucess = job.getString("response");
+                    //If login response successfull
+                    if (ISSucess.equals("1")) {
+                        //success
+                        // as user unfollow sprint :  sprint id is set to blank
+                        // as it is in other if created by self logged in user clear other flag
+                        if (createdby.equals(mSessionManager.getStringData(Constants.USER_ID))) {
+                            mSessionManager.putStringData(Constants.SPRINT_ID_MAP_OTHER, "");
+                            mSessionManager.setStartflagOther(false);
+                            Constants.mapMainFragment.googleMap_other.clear();
+                        }else {
+                            mSessionManager.putStringData(Constants.SPRINT_ID_MAP, "");
+                            mSessionManager.setStartflagMe(false);
+                            Constants.mapMainFragment.googleMap.clear();
+                        }
+
+                        Toast.makeText(getActivity(), "" + message, Toast.LENGTH_LONG).show();
+                        callListWebService();
+
+                        Constants.ISDIALOGOPEN = false;
+                        mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                        mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+
+                    } else {
+                        //unsuccess
+
+                        messageFragmentDialog = new MessageFragmentDialog(message);
+                        messageFragmentDialog.show(getActivity().getFragmentManager(), "dialog");
+                        messageFragmentDialog.setCancelable(false);
+
+
+                        //Saving state of Dialog
+                        Constants.ISDIALOGOPEN = true;
+                        mSessionManager.putStringData(Constants.DIALOGMESSAGE, message);
+                        mSessionManager.putStringData(Constants.DIALOGCLASS, getActivity().getClass().getSimpleName());
+
+
+                    }
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+
+                //unlockScreenOrientation();
+                //Constants.ISDIALOGOPEN = false;
+                // mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                //  mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // mPostCommentResponse.requestEndedWithError(error);
+                Log.e(TAG, "Service--i/p-" + error);
+                if (getActivity() != null) {
+                    if ((pDialog != null) && pDialog.isShowing()) {
+                        pDialog.dismiss();
+                    }
+                }
+                //unlockScreenOrientation();
+                Constants.ISDIALOGOPEN = false;
+                mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+
+                Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("sprint_id", sprintid);
+                params.put("user_id", mSessionManager.getStringData(Constants.USER_ID));
+                params.put("main_user_id", createdby);
+
+
+                Log.e(TAG, "URL: " + Constants.URL_UNFOLLOW_SELF
+                        + " sprint_id: " + sprintid
+                        + " user_id: " + mSessionManager.getStringData(Constants.USER_ID)
+                        + " main_user_id: " + createdby);
+
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+        mstringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(mstringrequest);
+
+    }
+
+
+    private void callReadAllSprintdata(final String sprint_id) {
+
+        //lockScreenOrientation();
+        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Getting Sprint data...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        // Tag used to cancel the request
+        String url = Constants.URL_GET_SPRINT_DATA_REFRESHED;
+
+
+        StringRequest mstringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                pDialog.dismiss();
+                Log.e("Followmate", "Service--o/p-" + response);
+                JSONArray jarray;
+                JSONObject job;
+                // do not uncomment it : pratibha had comment this
+                //unlockScreenOrientation();
+                Constants.arraylist_old_toCrossCheckStatus_other.clear();
+                try {
+
+                    job = new JSONObject(response);
+                    String ISSucess = job.getString("response");
+                    JSONArray sprint_data = job.getJSONArray("sprint_data");
+
+
+                    String sprint_id = null, activity = null, start_date_time = null, end_date_time = null,
+                            duration = null, sprint_created_by = null, status = null;
+                    String SprintUSer = null, Sprintstatus = null, latitude = null, longitude = null, user_name = null, mobile = null;
+
+                    //If  response successfull
+                    if (ISSucess.equals("1")) {
+
+
+                        //Constants.markerPoints.clear();
+                        // Constants.markerPoints_Other.clear();
+
+                        for (int i = 0; i < sprint_data.length(); i++) {
+                            JSONObject ObjSprint = sprint_data.getJSONObject(i);
+                            sprint_id = ObjSprint.getString("sprint_id");
+                            activity = ObjSprint.getString("activity");
+                            start_date_time = ObjSprint.getString("start_date_time");
+                            end_date_time = ObjSprint.getString("end_date_time");
+                            duration = ObjSprint.getString("duration");
+                            sprint_created_by = ObjSprint.getString("sprint_created_by");
+                            status = ObjSprint.getString("status");
+                            String type_sprint = ObjSprint.getString("type_sprint");
+                            Log.e("type_sprint", "type_sprint " + type_sprint);
+                            Log.e("^^^^^", "^^^^^" + "Status " + status);
+
+                            mSessionManager.putStringData(Constants.USER_Activity_other, activity);
+                            mSessionManager.putStringData(Constants.USER_START_TIME_other, start_date_time);
+                            mSessionManager.putStringData(Constants.USER_END_TIME_other, end_date_time);
+                            mSessionManager.putStringData(Constants.USER_DURATION_other, duration);
+                            mSessionManager.putStringData(Constants.SPRINT_ID_OTHER, sprint_id);
+
+
+                            List<SprintListMeModel.Sprint_data.Sprint_participant_data> arraylistParticipant = new ArrayList<SprintListMeModel.Sprint_data.Sprint_participant_data>();
+                            JSONArray sprint_participants_data = ObjSprint.getJSONArray("sprint_participants_data");
+                            for (int j = 0; j < sprint_participants_data.length(); j++) {
+                                JSONObject Objparticipant = sprint_participants_data.getJSONObject(j);
+
+                                SprintUSer = Objparticipant.getString("user_id");
+                                Sprintstatus = Objparticipant.getString("status");
+                                latitude = Objparticipant.getString("latitude");
+                                longitude = Objparticipant.getString("longitude");
+                                mobile = Objparticipant.getString("mobile");
+                                user_name = Objparticipant.getString("user_name");
+                                String profile_img = Objparticipant.getString("profile_img");
+
+                                Log.e("user_name", "user_name" + user_name);
+
+                                SprintListMeModel.Sprint_data.Sprint_participant_data Sprint_participant_data = new SprintListMeModel.Sprint_data.Sprint_participant_data(SprintUSer, Sprintstatus, latitude, longitude, mobile, user_name, profile_img);
+                                arraylistParticipant.add(Sprint_participant_data);
+                            }
+                            String user_id, user_mbl, user_status;
+
+                            for (int j = 0; j < arraylistParticipant.size(); j++) {
+
+                                user_id = arraylistParticipant.get(j).getSprintUSer();
+                                user_name = arraylistParticipant.get(j).getName();
+                                user_mbl = arraylistParticipant.get(j).getmobile();
+                                user_status = arraylistParticipant.get(j).getSprintstatus();
+                                String profile_img = arraylistParticipant.get(j).getProfileImage();
+                                Log.e("user_status", " user_name " + user_name + " user_status " + user_status + " User mobile " + user_mbl);
+                                Log.e("USER_PHNO", " USER_PHNO " + mSessionManager.getStringData(Constants.USER_PHNO));
+
+
+                                if (!mSessionManager.getStringData(Constants.USER_PHNO).equals(user_mbl)) {
+                                    contactListModelOther = new ContactListOtherModel(user_id, user_name, user_mbl, user_status, profile_img);
+                                    Constants.arrayList_SelectedContactList_other.clear();
+                                    Constants.arrayList_SelectedContactList_other.add(contactListModelOther);
+                                    Log.e("Check arrayList_SelectedContactList_other", "Check arrayList_SelectedContactList_other " + Constants.arrayList_SelectedContactList_other.size());
+                                    Constants.arrayList_ContactList_other.add(contactListModelOther);
+                                    Constants.TOTAL_CONTACTS_SELECTED_OTHER = 1;
+
+                                    Constants.old = user_id;
+                                    Constants.arraylist_old_toCrossCheckStatus_other.add(contactListModelOther);
+                                }
+                            }
+                            //unlockScreenOrientation();
+                            mListener.onFragmentInteractionFollowOther();
+                            //  mSessionManager.putStringData(Constants.ADDFOLLOWMESTATUS, "ON");
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pDialog.dismiss();
+                Log.e("Followmate", "Service--i/p-" + error);
+                if (getActivity() != null) {
+                    if ((pDialog != null) && pDialog.isShowing()) {
+                        pDialog.dismiss();
+                    }
+                }
+                //unlockScreenOrientation();
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("sprint_id", sprint_id);
+                Log.e("Followmate", "URL: " + Constants.URL_GET_SPRINT_DATA_REFRESHED + " sprint_id: " +
+                        sprint_id);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+        mstringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(mstringrequest);
+    }
+
+    public void HideList() {
+        listview_sprint_follow_other.setVisibility(View.GONE);
+        txtview_noSprint.setVisibility(View.VISIBLE);
+    }
+
+    public void callListWebService() {
+
+        Log.e("Pratibha", "Pratibha " + "callListWebService");
+        //lockScreenOrientation();
+        listview_sprint_follow_other.setVisibility(View.GONE);
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        String url = Constants.URL_SPRINT_LIST;
+
+       /* if (getActivity() != null) {
+            if ((pDialog != null) && pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+        }*/
+
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Getting Sprints...");
+        mProgressDialog.setCancelable(false);
+        if (getActivity() != null) {
+            mProgressDialog.show();
+            Log.e("Pratibha", "Pratibha " + "mProgressDialog.show()");
+        }
+        StringRequest mstringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Pratibha", "Pratibha " + "onResponse");
+                if (getActivity() != null) {
+                    if (mProgressDialog != null) {
+                        mProgressDialog.dismiss();
+                    }
+                }
+                Log.e(TAG, "Service--o/p-" + response);
+                JSONArray jarray;
+                JSONObject job;
+
+                String sprint_id = null, activity = null, start_date_time = null, end_date_time = null,
+                        duration = null, sprint_created_by = null, status = null;
+                String SprintUSer = null, Sprintstatus = null, latitude = null, longitude = null, user_name = null, mobile = null;
+
+                if (response.equals("")) {
+                    if (getActivity() != null) {
+                        if (mProgressDialog != null) {
+                            mProgressDialog.dismiss();
+                        }
+                    }
+                    listview_sprint_follow_other.setVisibility(View.GONE);
+                    txtview_noSprint.setVisibility(View.VISIBLE);
+                }
+
+                try {
+                    // jarray = new JSONArray(response);
+                    job = new JSONObject(response);
+
+                    arraylistsprintdata = new ArrayList<SprintListMeModel.Sprint_data>();
+                    SprintMainArrayList.clear();
+                    String ISSucess = job.getString("response");
+                    //If login response successfull
+                    if (ISSucess.equals("1")) {
+                        Log.e("Pratibha", "Pratibha " + "ISSucess.equals(\"1\")");
+                        if (getActivity() != null) {
+                            if (mProgressDialog != null) {
+                                mProgressDialog.dismiss();
+                            }
+                        }
+
+                        listview_sprint_follow_other.setVisibility(View.GONE);
+
+                        txtview_noSprint.setVisibility(View.GONE);
+
+
+                        JSONArray sprint_data = job.getJSONArray("sprint_data");
+                        for (int i = 0; i < sprint_data.length(); i++) {
+                            JSONObject ObjSprint = sprint_data.getJSONObject(i);
+                            sprint_id = ObjSprint.getString("sprint_id");
+                            activity = ObjSprint.getString("activity");
+                            start_date_time = ObjSprint.getString("start_date_time");
+                            end_date_time = ObjSprint.getString("end_date_time");
+                            duration = ObjSprint.getString("duration");
+                            sprint_created_by = ObjSprint.getString("sprint_created_by");
+                            status = ObjSprint.getString("status");
+
+                            int k = 2;
+                            List<SprintListMeModel.Sprint_data.Sprint_participant_data> arraylistParticipant = new ArrayList<SprintListMeModel.Sprint_data.Sprint_participant_data>();
+                            JSONArray sprint_participants_data = ObjSprint.getJSONArray("sprint_participants_data");
+                            for (int j = 0; j < sprint_participants_data.length(); j++) {
+                                JSONObject Objparticipant = sprint_participants_data.getJSONObject(j);
+
+                                SprintUSer = Objparticipant.getString("user_id");
+                                Sprintstatus = Objparticipant.getString("status");
+                                latitude = Objparticipant.getString("latitude");
+                                longitude = Objparticipant.getString("longitude");
+                                mobile = Objparticipant.getString("mobile");
+                                user_name = Objparticipant.getString("user_name");
+                                String profile_img = Objparticipant.getString("profile_img");
+
+                                Log.e("user_name while insert", "user_name while insert" + user_name);
+                                Log.e("Sprintstatus while insert", "Sprintstatus while insert" + Sprintstatus);
+
+
+                                SprintListMeModel.Sprint_data.Sprint_participant_data Sprint_participant_data = new SprintListMeModel.Sprint_data.Sprint_participant_data(SprintUSer, Sprintstatus, latitude, longitude, mobile, user_name, profile_img);
+                                arraylistParticipant.add(Sprint_participant_data);
+
+
+                               /* if (status.equals("1")) {
+
+                                    LatLng followee = null;
+                                    if (SprintUSer.equals(sprint_created_by)) {
+
+                                        followee = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                                        markerPointsModel = new MarkerPointsModel(user_name, followee);
+
+                                        Constants.markerPoints_Other.add(0, markerPointsModel);
+                                        Constants.markerPoints_Other.add(1, markerPointsModel);
+                                    } else {
+                                        LatLng follower = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                                        markerPointsModel = new MarkerPointsModel(user_name, follower);
+
+                                        Constants.markerPoints_Other.add(k, markerPointsModel);
+                                        k++;
+                                    }
+
+
+                                }
+*/
+                            }
+
+                            SprintListMeModel.Sprint_data Sprintdata = new SprintListMeModel.Sprint_data(sprint_id, activity,
+                                    start_date_time, end_date_time, duration, sprint_created_by, status, arraylistParticipant);
+                            arraylistsprintdata.add(Sprintdata);
+
+
+                            SprintListMeModel sprintListMeModel = new SprintListMeModel(arraylistsprintdata);
+                            SprintMainArrayList.add(sprintListMeModel);
+
+
+                        }
+                        listview_sprint_follow_other.setVisibility(View.VISIBLE);
+
+                        //Sending values to adapter
+                        sprintListOtherAdapter = new SprintListOtherAdapter(mActivity,
+                                SprintMainArrayList, SprintListFollowOtherFragment.this);
+                        //setting adapter to listview
+                        listview_sprint_follow_other.setAdapter(sprintListOtherAdapter);
+                        listview_sprint_follow_other.invalidateViews();
+                        sprintListOtherAdapter.notifyDataSetChanged();
+                        listview_sprint_follow_other.setVisibility(View.GONE);
+                        listview_sprint_follow_other.setVisibility(View.VISIBLE);
+                        Constants.ISDIALOGOPEN = false;
+                        mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                        mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+
+                    } else if (ISSucess.equals("2")) {
+                        //listview_sprint_follow_other.setVisibility(View.GONE);
+                        //txtview_noSprint.setVisibility(View.VISIBLE);
+                        Log.e("Pratibha", "Pratibha " + "ISSucess.equals(\"2\")");
+                        if (getActivity() != null) {
+                            if (mProgressDialog != null) {
+                                mProgressDialog.dismiss();
+                            }
+                        }
+                        ISEMPTY = true;
+
+                        Constants.ISDIALOGOPEN = false;
+                        mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                        mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+                    } else {
+
+                        message = job.getString("message");
+                        messageFragmentDialog = new MessageFragmentDialog(message);
+                        messageFragmentDialog.show(getActivity().getFragmentManager(), "dialog");
+                        messageFragmentDialog.setCancelable(false);
+
+
+                        //Saving state of Dialog
+                        Constants.ISDIALOGOPEN = true;
+                        mSessionManager.putStringData(Constants.DIALOGMESSAGE, message);
+                        mSessionManager.putStringData(Constants.DIALOGCLASS, getActivity().getClass().getSimpleName());
+                    }
+
+
+                    //Sending values to adapter
+                    sprintListOtherAdapter = new SprintListOtherAdapter(mActivity,
+                            SprintMainArrayList, SprintListFollowOtherFragment.this);
+                    listview_sprint_follow_other.setAdapter(sprintListOtherAdapter);
+                    listview_sprint_follow_other.invalidateViews();
+                    sprintListOtherAdapter.notifyDataSetChanged();
+
+
+                    if (getActivity() != null) {
+                        if (mProgressDialog != null) {
+                            mProgressDialog.dismiss();
+                        }
+                        callListOtherWebService();
+                    }
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                // do not uncomment it : pratibha had comment this
+                // unlockScreenOrientation();
+                //  Constants.ISDIALOGOPEN = false;
+                //  mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                //  mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // mPostCommentResponse.requestEndedWithError(error);
+
+                mProgressDialog.dismiss();
+                Log.e(TAG, "Service--i/p-" + error);
+                if (getActivity() != null) {
+                    if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                        mProgressDialog.dismiss();
+                    }
+                }
+                // do not uncomment it : pratibha had comment this
+                // unlockScreenOrientation();
+                Constants.ISDIALOGOPEN = false;
+                mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", mSessionManager.getStringData(Constants.USER_ID));
+                params.put("type_sprint", "2");
+
+
+                Log.e(TAG, "URL: " + Constants.URL_SPRINT_LIST + " user_id: " +
+                        mSessionManager.getStringData(Constants.USER_ID) + " type_sprint: " +
+                        "2");
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+        mstringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(mstringrequest);
+    }
+
+    private void callListOtherWebService() {
+
+        //lockScreenOrientation();
+        listview_sprint_follow_other.setVisibility(View.GONE);
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        // Tag used to cancel the request
+
+        String url = Constants.URL_SPRINT_LIST_FOLLOWER;
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Getting Sprints...");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+
+        StringRequest mstringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // mPostCommentResponse.requestCompleted();
+                //  pDialog.dismiss();
+                Log.e(TAG, "Service--o/p-" + response);
+                JSONArray jarray;
+                JSONObject job;
+
+                String sprint_id = null, activity = null, start_date_time = null, end_date_time = null,
+                        duration = null, sprint_created_by = null, status = null;
+                String SprintUSer = null, Sprintstatus = null, latitude = null, longitude = null, user_name = null, mobile = null;
+
+                if (response.equals("")) {
+                    listview_sprint_follow_other.setVisibility(View.GONE);
+                    txtview_noSprint.setVisibility(View.VISIBLE);
+                }
+
+                try {
+
+                    job = new JSONObject(response);
+
+                    String ISSucess = job.getString("response");
+
+                    if (ISSucess.equals("1")) {
+
+
+                        if (getActivity() != null) {
+
+                            mProgressDialog.dismiss();
+
+                        }
+
+                        Log.e("mProgressDialog check", "ISSucess.equals(\"1\")");
+                        // pDialog.dismiss();
+
+                        listview_sprint_follow_other.setVisibility(View.GONE);
+
+                        txtview_noSprint.setVisibility(View.GONE);
+
+
+                        JSONArray sprint_data = job.getJSONArray("sprint_data");
+
+                        if (sprint_data.length() == 0) {
+                            if (ISEMPTY) {
+                                listview_sprint_follow_other.setVisibility(View.GONE);
+                                txtview_noSprint.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            for (int i = 0; i < sprint_data.length(); i++) {
+                                JSONObject ObjSprint = sprint_data.getJSONObject(i);
+                                sprint_id = ObjSprint.getString("sprint_id");
+                                activity = ObjSprint.getString("activity");
+                                start_date_time = ObjSprint.getString("start_date_time");
+                                end_date_time = ObjSprint.getString("end_date_time");
+                                duration = ObjSprint.getString("duration");
+                                sprint_created_by = ObjSprint.getString("sprint_created_by");
+                                status = ObjSprint.getString("status");
+
+                                int k = 2;
+                                List<SprintListMeModel.Sprint_data.Sprint_participant_data> arraylistParticipant = new ArrayList<SprintListMeModel.Sprint_data.Sprint_participant_data>();
+                                JSONArray sprint_participants_data = ObjSprint.getJSONArray("sprint_participants_data");
+                                for (int j = 0; j < sprint_participants_data.length(); j++) {
+                                    JSONObject Objparticipant = sprint_participants_data.getJSONObject(j);
+
+                                    SprintUSer = Objparticipant.getString("user_id");
+                                    Sprintstatus = Objparticipant.getString("status");
+                                    latitude = Objparticipant.getString("latitude");
+                                    longitude = Objparticipant.getString("longitude");
+                                    mobile = Objparticipant.getString("mobile");
+                                    user_name = Objparticipant.getString("user_name");
+                                    String profile_img = Objparticipant.getString("profile_img");
+
+                                    Log.e("user_name while insert", "user_name while insert" + user_name);
+                                    Log.e("Sprintstatus while insert", "Sprintstatus while insert" + Sprintstatus);
+
+
+                                    SprintListMeModel.Sprint_data.Sprint_participant_data Sprint_participant_data = new SprintListMeModel.Sprint_data.Sprint_participant_data(SprintUSer, Sprintstatus, latitude, longitude, mobile, user_name, profile_img);
+                                    arraylistParticipant.add(Sprint_participant_data);
+
+
+                                /*    if (status.equals("1")) {
+                                        LatLng followee = null;
+                                        if (SprintUSer.equals(sprint_created_by)) {
+
+                                            followee = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                                            markerPointsModel = new MarkerPointsModel(user_name, followee);
+
+                                            Constants.markerPoints_Other.add(0, markerPointsModel);
+                                            Constants.markerPoints_Other.add(1, markerPointsModel);
+                                        } else {
+
+
+                                            LatLng follower = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                                            markerPointsModel = new MarkerPointsModel(user_name, follower);
+
+                                            Constants.markerPoints_Other.add(k, markerPointsModel);
+                                            k++;
+                                        }
+
+                                        mSessionManager.putStringData(Constants.SPRINT_ID_MAP, sprint_id);
+                                        mSessionManager.putStringData(Constants.SPRINT_SPRINT_CREATED_BY_MAP, sprint_created_by);
+
+
+                                    }
+*/
+
+                                }
+
+                                SprintListMeModel.Sprint_data Sprintdata = new SprintListMeModel.Sprint_data(sprint_id, activity,
+                                        start_date_time, end_date_time, duration, sprint_created_by, status, arraylistParticipant);
+                                arraylistsprintdata.add(Sprintdata);
+
+
+                                SprintListMeModel sprintListMeModel = new SprintListMeModel(arraylistsprintdata);
+                                SprintMainArrayList.add(sprintListMeModel);
+
+
+                            }
+                            listview_sprint_follow_other.setVisibility(View.VISIBLE);
+                        }
+                        //Sending values to adapter
+                        sprintListOtherAdapter = new SprintListOtherAdapter(mActivity,
+                                SprintMainArrayList, SprintListFollowOtherFragment.this);
+                        //setting adapter to listview
+                        listview_sprint_follow_other.setAdapter(sprintListOtherAdapter);
+                        listview_sprint_follow_other.invalidateViews();
+                        sprintListOtherAdapter.notifyDataSetChanged();
+                        listview_sprint_follow_other.setVisibility(View.GONE);
+                        listview_sprint_follow_other.setVisibility(View.VISIBLE);
+                        // pDialog.dismiss();
+                        Constants.ISDIALOGOPEN = false;
+                        mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                        mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+                    } else if (ISSucess.equals("2")) {
+                        Log.e("mProgressDialog check", "ISSucess.equals(\"2\")");
+                        //pDialog.dismiss();
+
+                        if (ISEMPTY) {
+                            listview_sprint_follow_other.setVisibility(View.GONE);
+                            txtview_noSprint.setVisibility(View.VISIBLE);
+                            if (getActivity() != null) {
+                                if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                                    mProgressDialog.dismiss();
+                                }
+                            }
+                        } else {
+                            listview_sprint_follow_other.setVisibility(View.VISIBLE);
+                            txtview_noSprint.setVisibility(View.GONE);
+                            if (getActivity() != null) {
+                                if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                                    mProgressDialog.dismiss();
+                                }
+                            }
+                        }
+                        // listview_sprint_follow_other.setVisibility(View.VISIBLE);
+                        // txtview_noSprint.setVisibility(View.VISIBLE);
+                        Constants.ISDIALOGOPEN = false;
+                        mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                        mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+                    } else {
+                        Log.e("mProgressDialog check", "else");
+                        mProgressDialog.dismiss();
+                        message = job.getString("message");
+
+
+                        // Toast.makeText(getActivity(), "" + job.getString("message"), Toast.LENGTH_SHORT).show();
+                        messageFragmentDialog = new MessageFragmentDialog(message);
+                        messageFragmentDialog.show(getActivity().getFragmentManager(), "dialog");
+                        messageFragmentDialog.setCancelable(false);
+
+
+                        //Saving state of Dialog
+                        Constants.ISDIALOGOPEN = true;
+                        mSessionManager.putStringData(Constants.DIALOGMESSAGE, message);
+                        mSessionManager.putStringData(Constants.DIALOGCLASS, getActivity().getClass().getSimpleName());
+                    }
+
+
+                    //Sending values to adapter
+                    sprintListOtherAdapter = new SprintListOtherAdapter(mActivity,
+                            SprintMainArrayList, SprintListFollowOtherFragment.this);
+                    listview_sprint_follow_other.setAdapter(sprintListOtherAdapter);
+                    listview_sprint_follow_other.invalidateViews();
+                    sprintListOtherAdapter.notifyDataSetChanged();
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                Log.e("mProgressDialog check", "out");
+                mProgressDialog.dismiss();
+                //unlockScreenOrientation();
+                //  Constants.ISDIALOGOPEN = false;
+                //  mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                //   mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Service--i/p-" + error);
+                mProgressDialog.dismiss();
+                //unlockScreenOrientation();
+                Constants.ISDIALOGOPEN = false;
+                mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
+                mSessionManager.putStringData(Constants.DIALOGCLASS, "");
+
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                }
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", mSessionManager.getStringData(Constants.USER_ID));
+                params.put("type_sprint", "1");
+                Log.e(TAG, "URL: " + Constants.URL_SPRINT_LIST_FOLLOWER + " user_id: " +
+                        mSessionManager.getStringData(Constants.USER_ID));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+        mstringrequest.setRetryPolicy(new
+
+                DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+
+        );
+
+        queue.add(mstringrequest);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+
+        if (messageFragmentDialog != null) {
+            messageFragmentDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+
+        if (messageFragmentDialog != null) {
+            messageFragmentDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+
+        if (messageFragmentDialog != null) {
+            messageFragmentDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+
+        if (messageFragmentDialog != null) {
+            messageFragmentDialog.dismiss();
+        }
+    }
+
+    //method for lock  screen
+    private void lockScreenOrientation() {
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+    }
+
+    //method for unlock  screen
+    private void unlockScreenOrientation() {
+        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+    }
+
+    public interface OnFragmentInteractionListenerFollowOther {
+        // TODO: Update argument type and name
+        public void onFragmentInteractionFollowOther();
+
+        public void onFragmentClearRecordInteractionFollowOther();
+    }
+
+
+}

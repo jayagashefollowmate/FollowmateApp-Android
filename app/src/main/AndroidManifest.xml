@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.terracotta.followmateapp">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- permissions for Google map -->
+    <permission
+        android:name="com.terracotta.followmateapp.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.terracotta.followmateapp.MAPS_RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+    <uses-library android:name="com.google.android.maps" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!--
+     for gmail
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.NETWORK" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <!-- for Push Notification -->
+    <uses-permission android:name="com.terracotta.followmateapp.permission.C2D_MESSAGE" />
+
+    <permission
+        android:name="com.terracotta.followmateapp.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- This app has permission to register and receive data message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!-- Required OpenGL ES 2.0. for Maps V2 -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <!-- android:name=".librarytestapp.ChatApplication" -->
+    <application
+        android:name=".librarytestapp.ChatApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/app_icon_new_one"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme"
+        tools:replace="icon">
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SignUpActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Activity.ChangePasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Activity.VerificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.Dashboard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".Activity.InviteContacts"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.NotificationActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- Goolge API Key -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDoDk6w9EnQaPnTMKplT9W_KJKm-FJHxTs" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".Activity.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Activity.ContactListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ContactListOtherActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".gmailintegration.GmailStartActivity" />
+        <activity android:name=".gmailintegration.GmailInfoActivity" />
+
+        <service
+            android:name=".utility.AcceptStatusService"
+            android:exported="false" />
+        <service
+            android:name=".utility.LocationService"
+            android:process=":my_service" />
+
+        <!-- Service for push notification -->
+        <service android:name=".GCMIntentService" />
+
+
+        <service
+            android:name=".MyAndroidFirebaseMsgService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".MyAndroidFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.terracotta.followmateapp" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <!-- *************************Comet chat Classes********************************** -->
+
+
+        <!--
+          <service
+              android:name="com.parse.PushService"
+              android:enabled="true" />
+
+          <receiver
+              android:name="helper.PushNotificationsManager"
+              android:exported="false">
+              <intent-filter>
+                  <action android:name="android.intent.action.BOOT_COMPLETED" />
+                  <action android:name="android.intent.action.USER_PRESENT" />
+                  <action android:name="com.parse.push.intent.RECEIVE" />
+                  <action android:name="com.parse.push.intent.DELETE" />
+                  <action android:name="com.parse.push.intent.OPEN" />
+              </intent-filter>
+          </receiver>
+          <receiver
+              android:name="com.parse.GcmBroadcastReceiver"
+              android:permission="com.google.android.c2dm.permission.SEND">
+              <intent-filter>
+                  <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                  <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                  <category android:name="inscripts.com.librarytestapp" />
+              </intent-filter>
+          </receiver>
+        -->
+
+
+        <!--
+        <activity
+            android:name=".librarytestapp.LauncherActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".librarytestapp.ChooserActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".librarytestapp.ChooserActivity" />
+        </activity>
+        <activity
+            android:name=".librarytestapp.ChooserActivity"
+            android:label="Chat demo" >
+        </activity>
+        <activity
+            android:name=".librarytestapp.UrlScreenActivity"
+            android:parentActivityName=".librarytestapp.SampleCometChatActivity" >
+
+            &lt;!&ndash; Parent activity meta-data to support 4.0 and lower &ndash;&gt;
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".librarytestapp.SampleCometChatActivity" />
+        </activity>
+        -->
+        <activity
+            android:name=".librarytestapp.ChatroomListActivity"
+            android:label="@string/chatrooms"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".librarytestapp.SampleCometChatActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".librarytestapp.SampleCometChatActivity" />
+        </activity>
+        <activity
+            android:name=".librarytestapp.SampleSingleChatActivity"
+            android:label="@string/title_activity_single_chat"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".librarytestapp.UsersListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".librarytestapp.UsersListActivity" />
+        </activity>
+        <activity
+            android:name=".librarytestapp.ChatroomChatActivity"
+            android:label="@string/title_activity_chatroom_chat"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".librarytestapp.ChatroomListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".librarytestapp.ChatroomListActivity" />
+        </activity>
+        <activity
+            android:name=".librarytestapp.SampleCometChatActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"></activity>
+        <activity
+            android:name=".librarytestapp.LogsActivity"
+            android:label="@string/title_activity_logs"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".librarytestapp.SampleCometChatActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".librarytestapp.SampleCometChatActivity" />
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".librarytestapp.SampleIncomingCallActivity"
+            android:label="@string/title_activity_incoming_call"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".librarytestapp.CreateChatRoomActivity"
+            android:label="@string/title_activity_incoming_call"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".librarytestapp.InviteUsersListActivity"
+            android:label="@string/title_activity_incoming_call"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".librarytestapp.SampleOutgoiningCallActivity"
+            android:label="@string/title_activity_outgoining_call"></activity>
+        <activity android:name=".librarytestapp.AVChatActivity"
+            android:screenOrientation="portrait"></activity>
+        <!--
+        <activity
+            android:name=".librarytestapp.LoginTypeActivity"
+            android:label="@string/title_activity_login_type"
+            android:parentActivityName=".librarytestapp.UrlScreenActivity" >
+
+            &lt;!&ndash; Parent activity meta-data to support 4.0 and lower &ndash;&gt;
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".librarytestapp.UrlScreenActivity" />
+        </activity>
+        <activity
+            android:name=".librarytestapp.LoginChatActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".librarytestapp.LoginTypeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".librarytestapp.LoginTypeActivity" />
+        </activity>
+        -->
+        <activity
+            android:name=".librarytestapp.UnblockUser"
+            android:label="@string/title_activity_unblock_user"></activity>
+        <activity
+            android:name=".librarytestapp.UsersListActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".librarytestapp.SampleCometChatActivity" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".librarytestapp.SampleCometChatActivity" />
+        </activity>
+        <activity
+            android:name=".librarytestapp.WebviewActivity"
+            android:label="@string/title_activity_webview"
+            android:configChanges="screenSize|orientation">
+
+        </activity>
+        <activity android:name=".librarytestapp.SinglePlayerGamesActivity" />
+        <activity android:name=".Activity.ChatActivity"
+            android:screenOrientation="portrait"></activity>
+    </application>
+
+</manifest>

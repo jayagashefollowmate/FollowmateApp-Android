@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.inscripts.cometchat_sdkdemo.ChatroomChatActivity" >
+
+    <item
+        android:id="@+id/action_create_chatroom"
+        android:orderInCategory="100"
+        android:title="Create Group"
+        app:showAsAction="collapseActionView"/>
+
+</menu>

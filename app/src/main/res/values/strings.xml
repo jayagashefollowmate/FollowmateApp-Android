@@ -1,0 +1,129 @@
+<resources>
+    <string name="app_name">FollowMate</string>
+
+    <string name="text_Followmate">FollowMate</string>
+    <string name="facebook_app_id">1593654370934102</string>
+
+    <!--Login-->
+    <string name="text_hint_email">Email</string>
+    <string name="text_hint_password">Password</string>
+    <string name="text_remember_me">Remember Me</string>
+    <string name="text_forgot_password">Forgot Password?</string>
+    <string name="text_not_member">Not a member?</string>
+    <string name="text_signup">" "Signup Now</string>
+    <string name="text_button_login">LOGIN</string>
+    <string name="text_button_Ok">OK</string>
+    <string name="text_button_changepass">SUBMIT</string>
+
+
+    <!--Sign up-->
+    <string name="text_title_signup">Sign up</string>
+    <string name="text_hint_name1">Name</string>
+    <string name="text_hint_phonenumber">Contact Number</string>
+    <string name="text_hint_confirmpassword">Confirm Password</string>
+    <string name="text_button_createaccount">CREATE ACCOUNT</string>
+
+    <!--Verification-->
+    <string name="text_title_verification">Verification</string>
+    <string name="text_hint_verification">Verification Code</string>
+    <string name="text_button_vrify">Verify</string>
+
+    <!--Contact List-->
+    <string name="text_title_contactlist">Contact List</string>
+    <string name="text_button_confirm">CONFIRM</string>
+    <string name="text_no_contacts">0 contacts on this phone have follow mate installed</string>
+
+    <!--Profile-->
+    <string name="text_title_Profile">Profile</string>
+    <string name="text_update">Update</string>
+    <string name="text_Change_password">Change Password?</string>
+    <string name="text_old_password">Old Password</string>
+
+    <string name="text_New_password">New Password</string>
+    <string name="text_conf_password">Confirm Password</string>
+
+
+    <!--ForgotPassword-->
+    <string name="text_title_forgotpassword">Forgot Password</string>
+    <string name="text_button_sendpassword">SEND PASSWORD</string>
+    <string name="text_display">Enter your email id and we will send you a Password.</string>
+
+    <!--Dashboard-->
+    <string name="text_Map">MAP</string>
+    <string name="text_Sprint">FOLLOW</string>
+    <string name="text_Chat">CHAT</string>
+    <string name="text_follow_me">Follow Me</string>
+    <string name="text_follow_other">Follow Others</string>
+    <string name="text_Enter_PhNo">Enter your Phone Number</string>
+    <string name="text_share_sms">Check out Followmate for your smartphone. Download it today from https://followmate.com</string>
+    <string name="text_title_contacts">Contacts</string>
+
+    <!--Sprint-->
+    <string name="text_add_contact">Add Contact</string>
+    <string name="text_Activity">Activity</string>
+    <string name="text_Duration">Duration</string>
+    <string name="text_StartDateAndTime">Select Start Date and Time</string>
+    <string name="text_EndDateAndTime">Select End Date and Time</string>
+    <string name="text_button_setting">SETTING</string>
+    <string name="text_button_cancel">CANCEL</string>
+    <string name="text_button_delete">DELETE</string>
+
+    <string name="location_Setting">Location Services Not Active. Please Enable Location Services and GPS</string>
+    <string name="location_unavailable">Unable to locate the place.</string>
+
+    <!--Notification-->
+    <string name="text_title_notification">Notifications</string>
+    <string name="text_title_ChangePassword">Change Password</string>
+    <string name="banner_home_footer">ca-app-pub-7461905004609273/7944553549</string>
+
+
+    <!--Error-->
+    <string name="error_name">Please enter your name</string>
+    <string name="error_name_invalid">Please enter valid name</string>
+    <string name="error_email">Please enter valid email id</string>
+    <string name="error_contact">Please enter valid Contact number</string>
+    <string name="error_password">Please enter valid Password</string>
+    <string name="error_password_minlength">Minimum 4 characters required </string>
+    <string name="error_password_length">Minimum 4 characters required </string>
+    <string name="error_confirmpassword">Please enter valid Confirm Password</string>
+    <string name="error_confirmpassword_missmatch">Confirm Password not matched with Password</string>
+    <string name="error_no_sprint">No Sprint Available</string>
+    <string name="error_no_notification">No Notification Available</string>
+    <string name="error_activity">Please enter activity</string>
+    <string name="error_startDate">Please Select Start Date and Time</string>
+    <string name="error_EndDate">Please Select End Date and Time</string>
+    <string name="confirm_unfollow">Are you sure You want to unfollow this user?</string>
+    <string name="confirm_unfollow_list">Are you sure You want to unfollow?</string>
+
+
+    <!-- Comet Chat Strings -->
+    <string name="title_activity_chooser">ChooserActivity</string>
+    <string name="user_list">User List</string>
+    <string name="chatrooms">Chatroom List</string>
+    <string name="chat_string">"<p>Click following icon to chat with your friends.\nCheck who is online.</p>"</string>
+
+
+    <string name="title_activity_single_chat">SingleChatActivity</string>
+    <string name="title_activity_chatroom_chat">ChatroomChatActivity</string>
+
+    <string name="title_activity_logs">Logs</string>
+    <string name="title_activity_incoming_call">IncomingCallActivity</string>
+    <string name="title_activity_invite">InviteActivity</string>
+    <string name="title_create_chatroom">CreateChatroomActivity</string>
+    <string name="title_activity_outgoining_call">OutgoiningCallActivity</string>
+    <string name="title_call_user">Call user</string>
+    <string name="title_send_image">Share image</string>
+    <string name="title_activity_aabcs">Aabcs</string>
+    <string name="title_activity_url_screen">UrlScreenActivity</string>
+    <string name="title_activity_login_type">Select login type</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_block_user">Block user</string>
+    <string name="title_activity_unblock_user">UnblockUser</string>
+    <string name="title_activity_webview">WebviewActivity</string>
+
+
+    <string name="text_individual_chat">Individual</string>
+    <string name="text_group_chat">Group</string>
+
+
+</resources>

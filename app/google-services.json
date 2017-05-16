@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "787349832160",
+    "firebase_url": "https://followmate-28057.firebaseio.com",
+    "project_id": "followmate-28057",
+    "storage_bucket": "followmate-28057.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787349832160:android:a6b798403ee9e0aa",
+        "android_client_info": {
+          "package_name": "com.terracotta.followmateapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "787349832160-rgq1avhhr5jgn1mv0al7hpulrb8bqcmq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8a2WAu9QmXy5XEQyda_hrQN0MOxrIIaA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

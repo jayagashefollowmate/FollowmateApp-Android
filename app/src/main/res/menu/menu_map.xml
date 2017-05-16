@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <!-- Profile -->
+    <item android:id="@+id/action_profile"
+        android:title="Profile"
+        android:showAsAction="never"/>
+
+
+
+    <!-- Normal map view -->
+    <item android:id="@+id/action_Normal"
+        android:title="Normal Map View"
+        android:showAsAction="never"/>
+
+    <!-- satellite map view -->
+    <item android:id="@+id/action_satellite"
+        android:title="Satellite Map View"
+        android:showAsAction="never" />
+
+
+    <!-- Route_Option map view -->
+    <item android:id="@+id/action_Route_Option"
+        android:title="Route Options"
+        android:showAsAction="never" />
+
+    <!-- Route_Option map view -->
+    <item android:id="@+id/action_Traffic"
+        android:title="Traffic"
+        android:showAsAction="never" />
+
+    <!-- Check updates -->
+    <item android:id="@+id/action_logout"
+        android:title="Logout"
+        android:showAsAction="never" />
+</menu>

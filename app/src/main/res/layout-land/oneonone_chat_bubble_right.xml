@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/leftbubbleContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/right_bubble_drawable"
+        android:padding="6dp" >
+
+        <com.inscripts.custom.EmojiTextView
+            android:id="@+id/textViewMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:maxWidth="250dp"
+            android:text="Message"
+            android:textColor="#FFF"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/imageViewImageMessage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:padding="2dp"
+            android:src="@drawable/thumbnail_default"
+            android:visibility="gone" />
+
+        <VideoView
+            android:id="@+id/VideoViewImageMessage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/textViewUserName"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="2dp"
+            android:padding="2dp"
+            android:src="@drawable/thumbnail_default"
+            android:visibility="gone" />
+
+
+        <ImageView
+            android:id="@+id/imageViewVideoMessage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/textViewUserName"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="2dp"
+            android:padding="2dp"
+            android:src="@drawable/playimg"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageViewmessageTicks"
+        android:layout_width="15dp"
+        android:layout_height="12dp"
+        android:layout_alignRight="@+id/leftbubbleContainer"
+        android:layout_below="@+id/leftbubbleContainer"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/iconsent" />
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/leftbubbleContainer"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_toLeftOf="@id/imageViewmessageTicks"
+        android:text="Time"
+        android:textColor="#666"
+        android:textSize="12sp" />
+
+</RelativeLayout>

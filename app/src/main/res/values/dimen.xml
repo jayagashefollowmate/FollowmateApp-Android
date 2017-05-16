@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="form_margin">20dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+
+
+    <!--TextSize-->
+    <dimen name="small_text_size">14dp</dimen>
+    <dimen name="medium_text_size">16dp</dimen>
+    <dimen name="large_text_size">18dp</dimen>
+    <dimen name="xlarge_text_size">22dp</dimen>
+
+    <dimen name="button_height">40dp</dimen>
+    <dimen name="layout_height">30dp</dimen>
+    <dimen name="button_width">150dp</dimen>
+    <dimen name="button_width_follow">170dp</dimen>
+
+
+
+    <dimen name="actionbar_height">60dp</dimen>
+</resources>

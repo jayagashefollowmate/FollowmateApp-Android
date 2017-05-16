@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:background="@color/color_blue">
+
+      <!--  <ImageView
+            android:id="@+id/imageview_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/padding_10"
+            android:src="@mipmap/back" />-->
+
+        <TextView
+            style="@style/style_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/text_title_verification" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/form_margin"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/style_textview_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:gravity="center"
+            android:text="Enter the verification code sent to your Email" />
+
+
+        <EditText
+            android:id="@+id/edittext_code"
+            style="@style/style_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:background="@drawable/edittext_style"
+            android:hint="@string/text_hint_verification"
+            android:inputType="number"
+            android:textColorHint="@color/colorBlack" />
+
+        <Button
+            android:id="@+id/btn_Verify"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:background="@mipmap/btn_bg"
+            android:text="@string/text_button_vrify"
+            android:textColor="@color/colorWhite" />
+
+        <!--<TextView
+            android:id="@+id/textview_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go Back"
+            android:textColor="@color/color_blue"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="@dimen/large_text_size"/>-->
+
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            android:layout_marginTop="5dp"
+            ads:adUnitId="@string/banner_home_footer"
+            android:layout_marginBottom="5dp"/>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

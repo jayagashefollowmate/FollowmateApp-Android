@@ -1,0 +1,76 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.inscripts.cometchat_sdkdemo.SingleChatActivity" >
+
+  <!--  <item
+        android:id="@+id/action_call_user"
+        android:orderInCategory="100"
+        android:title="Call user"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_audio_call_user"
+        android:orderInCategory="100"
+        android:title="Make audio call"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_start_broadcast"
+        android:orderInCategory="100"
+        android:title="Start broadcast"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_send_image"
+        android:orderInCategory="100"
+        android:title="Send image"
+        app:showAsAction="collapseActionView"/>-->
+    <item
+        android:id="@+id/action_pick_image"
+        android:orderInCategory="100"
+        android:title="Share image"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_capture_photo"
+        android:orderInCategory="100"
+        android:title="Capture photo"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_capture_video"
+        android:orderInCategory="100"
+        android:title="Capture video"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_share_video"
+        android:orderInCategory="100"
+        android:title="Share video"
+        app:showAsAction="collapseActionView"/>
+ <!--   <item
+        android:id="@+id/action_share_audio"
+        android:orderInCategory="100"
+        android:title="Share audio"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_share_file"
+        android:orderInCategory="100"
+        android:title="Share file"
+        app:showAsAction="collapseActionView"/>-->
+   <!-- <item
+        android:id="@+id/action_block_user"
+        android:orderInCategory="100"
+        android:title="Block user"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_whiteboard"
+        android:orderInCategory="100"
+        android:title="Start whiteboard"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_writeboard"
+        android:orderInCategory="100"
+        android:title="Start writeboard"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_reportconversation"
+        android:orderInCategory="100"
+        android:title="Report conversation"
+        app:showAsAction="collapseActionView"/>-->
+</menu>
