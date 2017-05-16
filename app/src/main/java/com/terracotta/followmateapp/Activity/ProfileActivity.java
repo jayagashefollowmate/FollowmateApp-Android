@@ -1163,6 +1163,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                     // jarray = new JSONArray(response);
                     job = new JSONObject(response);
 
+                    //Systeasmdml;asdm;
                     String user_email = null, country_code = null, user_pass = null, user_name = null, user_id = null, status = null, user_mobile = null, user_profile = null;
 
                     String ISSucess = job.getString("response");
