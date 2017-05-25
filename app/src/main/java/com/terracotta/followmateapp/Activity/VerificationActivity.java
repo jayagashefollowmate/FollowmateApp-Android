@@ -23,8 +23,8 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
 

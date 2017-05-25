@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -56,8 +57,8 @@ public class ContactListOtherActivity extends AppCompatActivity implements Adapt
     @Bind(R.id.imageview_back)
     ImageView imageview_back;
 
-    @Bind(R.id.textview_message)
-    TextView textview_message;
+    @Bind(R.id.textview_messageOther)
+    TextView textview_messageOther;
 
    /* @Bind(R.id.button_confirm)
     Button button_confirm;*/
@@ -84,6 +85,9 @@ public class ContactListOtherActivity extends AppCompatActivity implements Adapt
     SessionManager mSessionManager;
     JSONObject obj;
     JSONArray array;
+    ProgressDialog pDialog;
+    Cursor cur;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +98,8 @@ public class ContactListOtherActivity extends AppCompatActivity implements Adapt
         mSessionManager.putStringData(Constants.LAST_VISITED, Constants.ACTIVITY_ADD_SPRINT_ME);
 
         setFont();
-        readContacts();
+        //readContacts();
+
 
         Log.e("rahul size--", "contactListMeModels" + Constants.arrayList_SelectedContactList_other.size());
 
@@ -116,21 +121,57 @@ public class ContactListOtherActivity extends AppCompatActivity implements Adapt
             mSessionManager.putStringData(Constants.DIALOGCLASS, ContactListOtherActivity.this.getClass().getSimpleName());
         }
 
+        new getContactsFromPhoneAsyncTask().execute();
 
         // getFollowmateContactList();
         listview_contact_list.setOnItemClickListener(this);
     }
 
+    private class getContactsFromPhoneAsyncTask extends AsyncTask<String, Integer, String> {
 
-    public void readContacts() {
-        try {
-            final ProgressDialog pDialog = new ProgressDialog(ContactListOtherActivity.this);
+        String fromWhich = "";
+        protected void onPreExecute() {
 
+            pDialog = new ProgressDialog(ContactListOtherActivity.this);
             pDialog.setMessage("Getting Contacts...");
             pDialog.setCancelable(false);
             pDialog.show();
+            Log.e("onPreExecute", "onPreExecute");
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            // TODO Auto-generated method stub
+
+            readContacts();
+
+
+            return "";
+        }
+
+        protected void onPostExecute(String response) {
+            Log.e("onPostExecute", "onPostExecute");
+            //pDialog.dismiss();
+
+            if (cur.getCount() > 0) {
+                getFollowmateContactList();
+            } else {
+                pDialog.dismiss();
+                //unlockScreenOrientation();
+                Toast.makeText(ContactListOtherActivity.this, "No Contacts available", Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
+
+    public void readContacts() {
+        try {
+
+
             ContentResolver cr = getContentResolver();
-            Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
+            cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                     null, null, null, null);
             String phone = null;
             obj = new JSONObject();
@@ -173,13 +214,7 @@ public class ContactListOtherActivity extends AppCompatActivity implements Adapt
             }
             System.out.println(obj.toString());
 
-            if (cur.getCount() > 0) {
-                getFollowmateContactList();
-            } else {
-                pDialog.dismiss();
-                //unlockScreenOrientation();
-                Toast.makeText(ContactListOtherActivity.this, "No Contacts available", Toast.LENGTH_LONG).show();
-            }
+
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -193,11 +228,11 @@ public class ContactListOtherActivity extends AppCompatActivity implements Adapt
 
         String url = Constants.URL_CONTACTLIST;
 
-        final ProgressDialog pDialog = new ProgressDialog(ContactListOtherActivity.this);
+       /* final ProgressDialog pDialog = new ProgressDialog(ContactListOtherActivity.this);
 
         pDialog.setMessage("Getting Contacts...");
         pDialog.show();
-
+*/
         StringRequest mstringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -244,10 +279,10 @@ public class ContactListOtherActivity extends AppCompatActivity implements Adapt
                         }
                         
                         if (counter == UserData.length()) {
-                            textview_message.setVisibility(View.VISIBLE);
+                            textview_messageOther.setVisibility(View.VISIBLE);
                             listview_contact_list.setVisibility(View.GONE);
                         } else {
-                            textview_message.setVisibility(View.GONE);
+                            textview_messageOther.setVisibility(View.GONE);
                             listview_contact_list.setVisibility(View.VISIBLE);
                             contactListAdapterOther = new ContactListOtherAdapter(ContactListOtherActivity.this,
                                     Constants.arrayList_ContactList_other, "With");

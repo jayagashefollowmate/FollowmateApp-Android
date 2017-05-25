@@ -16,8 +16,8 @@ android {
         applicationId "com.terracotta.followmateapp"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 6
-        versionName "6.0"
+        versionCode 8
+        versionName "8.0"
         multiDexEnabled true
 
     }
@@ -29,6 +29,7 @@ android {
         }
         debug {
             signingConfig signingConfigs.config
+
         }
     }
     dexOptions {
@@ -64,6 +65,7 @@ repositories {
 
 
 dependencies {
+
 
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //for GCM (Google Cloud Messaging)

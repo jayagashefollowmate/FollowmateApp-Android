@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -45,9 +46,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.terracotta.followmateapp.Activity.ContactListActivity;
+import com.terracotta.followmateapp.R;
 import com.terracotta.followmateapp.dialog.MessageDialog;
 import com.terracotta.followmateapp.model.ContactListMeModel;
-import com.terracotta.followmateapp.R;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
 import com.terracotta.followmateapp.adapter.ContactListMeAdapter;
@@ -72,7 +73,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyListener, AdapterView.OnItemClickListener, MessageDialog.OnMessageDialogInteraction {
+public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyListener, AdapterView.OnItemClickListener, MessageDialog.OnMessageDialogInteraction, View.OnClickListener {
 
     private View view;
     @Bind(R.id.Linear_add_contact)
@@ -88,6 +89,8 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
     @Bind(R.id.ImageView_back)
     ImageView ImageView_back;
 
+    //@Bind(R.id.tvAddContactsMe)
+    TextView tvAddContactsMe;
 
     @Bind(R.id.txt_StartDate_me)
     TextView txt_StartDate_me;
@@ -115,11 +118,12 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
     boolean unfollow_flag = true;
 
     MessageDialog messageDialog;
+    boolean isBtnClicked = true;
+
     //MessageFragmentDialog messageFragmentDialog;
 
 
     private static final int REQUEST_GET_ACCOUNT = 112;
-
 
     String TAG = "FollowMate";
     String message = null;
@@ -168,6 +172,7 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
         button_sprint_follow_me.setTypeface(roboto);
 
         txt_StartDate_me.setTypeface(roboto);
+
         txt_EndDate_me.setTypeface(roboto);
 
     }
@@ -207,6 +212,45 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
         });
 
         listview_follow_me.setOnItemClickListener(this);
+
+        tvAddContactsMe = (TextView) view.findViewById(R.id.tvAddContactsMe);
+
+        tvAddContactsMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(getActivity(), "Me Btn Clicked", Toast.LENGTH_SHORT).show();
+                if (isBtnClicked) {
+                        /*Linear_add_contact.setClickable(false);
+                        Linear_add_contact.setEnabled(false);*/
+                    isBtnClicked = false;
+
+                    mSessionManager.putStringData(Constants.ADDFOLLOWMESTATUS, "ON");
+                    Linear_add_contact.setEnabled(false);
+                    if (android.os.Build.VERSION.SDK_INT > 22) {
+                        if (isGETACCOUNTSAllowed()) {
+                            // do your task
+                            Intent ContactIntent = new Intent(getActivity(), ContactListActivity.class);
+                            ContactIntent.putExtra("WhichActivity", "FollowMe");
+                            ContactIntent.putParcelableArrayListExtra("ContactList", Constants.arrayList_ContactList_toShow);
+                            startActivity(ContactIntent);
+
+                            //return;
+                        } else {
+                            mSessionManager.setRequestActivity("AddSprintFollowMe");
+
+                            requestGET_ACCOUNTSPermission();
+                        }
+
+                    } else {
+                        Intent ContactIntent = new Intent(getActivity(), ContactListActivity.class);
+                        ContactIntent.putExtra("WhichActivity", "FollowMe");
+                        ContactIntent.putParcelableArrayListExtra("ContactList", Constants.arrayList_ContactList_toShow);
+                        startActivity(ContactIntent);
+
+                    }
+                }
+            }
+        });
 
         if (Constants.ISDIALOGOPEN) {
 
@@ -257,8 +301,8 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
             Log.e("finalmonth ", "finalmonth " + finalmonth);
             Log.e("finalday ", "finalday " + finalday);
 
-
         }
+
         if (!mSessionManager.getStringData(Constants.USER_END_TIME_me).equals("")) {
             txt_EndDate_me.setText(mSessionManager.getStringData(Constants.USER_END_TIME_me));
 
@@ -283,6 +327,7 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
             Log.e("finalday_end ", "finalday_end " + finalday_end);
 
         }
+
         if (!mSessionManager.getStringData(Constants.USER_DURATION_me).equals("")) {
             editText_duration_follow_me.setText(mSessionManager.getStringData(Constants.USER_DURATION_me));
         }
@@ -328,37 +373,45 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
     }
 
 
-    @OnClick(R.id.Linear_add_contact)
+
+
+    /*@OnClick(R.id.tvAddContactsMe)
     public void getContactList() {
-        mSessionManager.putStringData(Constants.ADDFOLLOWMESTATUS, "ON");
-        // Linear_add_contact.setVisibility(View.GONE);
-        Linear_add_contact.setEnabled(false);
-        if (android.os.Build.VERSION.SDK_INT > 22) {
-            if (isGETACCOUNTSAllowed()) {
-                // do your task
+
+        if(isBtnClicked) {
+            *//*Linear_add_contact.setClickable(false);
+            Linear_add_contact.setEnabled(false);*//*
+            isBtnClicked = false;
+
+            mSessionManager.putStringData(Constants.ADDFOLLOWMESTATUS, "ON");
+            Linear_add_contact.setEnabled(false);
+            if (android.os.Build.VERSION.SDK_INT > 22) {
+                if (isGETACCOUNTSAllowed()) {
+                    // do your task
+                    Intent ContactIntent = new Intent(getActivity(), ContactListActivity.class);
+                    ContactIntent.putExtra("WhichActivity", "FollowMe");
+                    ContactIntent.putParcelableArrayListExtra("ContactList", Constants.arrayList_ContactList_toShow);
+                    startActivity(ContactIntent);
+
+                    return;
+                } else {
+                    mSessionManager.setRequestActivity("AddSprintFollowMe");
+
+                    requestGET_ACCOUNTSPermission();
+                }
+
+            } else {
                 Intent ContactIntent = new Intent(getActivity(), ContactListActivity.class);
                 ContactIntent.putExtra("WhichActivity", "FollowMe");
                 ContactIntent.putParcelableArrayListExtra("ContactList", Constants.arrayList_ContactList_toShow);
                 startActivity(ContactIntent);
 
-                return;
-            } else {
-                mSessionManager.setRequestActivity("AddSprintFollowMe");
-
-                requestGET_ACCOUNTSPermission();
             }
-
-        } else {
-            Intent ContactIntent = new Intent(getActivity(), ContactListActivity.class);
-            ContactIntent.putExtra("WhichActivity", "FollowMe");
-            ContactIntent.putParcelableArrayListExtra("ContactList", Constants.arrayList_ContactList_toShow);
-            startActivity(ContactIntent);
-
         }
 
 
     }
-
+*/
 
     @OnClick(R.id.imgview_StartDate_me)
     public void getStartDateandTime() {
@@ -647,8 +700,10 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
     @Override
     public void onResume() {
         super.onResume();
-        Linear_add_contact.setEnabled(true);
-
+        Log.e("onResume", "onResume");
+        /*Linear_add_contact.setEnabled(true);
+        Linear_add_contact.setClickable(true);
+*/
         mSessionManager.putStringData(Constants.ADDFOLLOWMESTATUS, "ON");
 
         if (!mSessionManager.getStringData(Constants.USER_START_TIME_me).equals("")) {
@@ -729,15 +784,14 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
                     }
 
 
-                    if(Constants.arrayList_ContactList_toShow.size()==1){
+                    if (Constants.arrayList_ContactList_toShow.size() == 1) {
                         ViewGroup.LayoutParams list = listview_follow_me.getLayoutParams();
 
-                        list.height =250;
+                        list.height = 250;
                         listview_follow_me.setLayoutParams(list);
                         listview_follow_me.requestLayout();
 
                     }
-
 
 
                     //Sending values to adapter
@@ -772,11 +826,10 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
                     }
 
 
-
-                    if(Constants.arrayList_ContactList_toShow.size()==1){
+                    if (Constants.arrayList_ContactList_toShow.size() == 1) {
                         ViewGroup.LayoutParams list = listview_follow_me.getLayoutParams();
 
-                        list.height =250;
+                        list.height = 250;
                         listview_follow_me.setLayoutParams(list);
                         listview_follow_me.requestLayout();
 
@@ -815,10 +868,10 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
                     }*/
 
 
-                    if(Constants.arrayList_ContactList_toShow.size()==1){
+                    if (Constants.arrayList_ContactList_toShow.size() == 1) {
                         ViewGroup.LayoutParams list = listview_follow_me.getLayoutParams();
 
-                        list.height =250;
+                        list.height = 250;
                         listview_follow_me.setLayoutParams(list);
                         listview_follow_me.requestLayout();
 
@@ -872,9 +925,19 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
         GoToList();
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvAddContactsMe:
+
+
+                break;
+        }
+    }
+
 
     // Dialog for confirmation of delete
-    public class UnFollowConfirmationDialog  extends DialogFragment {
+    public class UnFollowConfirmationDialog extends DialogFragment {
 
         int pos;
 

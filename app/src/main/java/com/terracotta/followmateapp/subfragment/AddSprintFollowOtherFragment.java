@@ -1,5 +1,6 @@
 package com.terracotta.followmateapp.subfragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -70,11 +71,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddSprintFollowOtherFragment extends Fragment implements View.OnKeyListener, AdapterView.OnItemClickListener, MessageDialogOther.OnMessageDialogInteraction {
+public class AddSprintFollowOtherFragment extends Fragment implements View.OnKeyListener, AdapterView.OnItemClickListener, MessageDialogOther.OnMessageDialogInteraction, View.OnClickListener {
 
     private View view;
-    @Bind(R.id.Linear_add_contact)
-    LinearLayout Linear_add_contact;
+    @Bind(R.id.Linear_add_contactOther)
+    LinearLayout Linear_add_contactOther;
     @Bind(R.id.editText_Activity_follow_other)
     EditText editText_Activity_follow_other;
     @Bind(R.id.editText_duration_follow_other)
@@ -86,7 +87,6 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
     @Bind(R.id.ImageView_back)
     ImageView txtview_back;
 
-
     @Bind(R.id.txt_StartDate_other)
     TextView txt_StartDate_other;
     @Bind(R.id.txt_EndDate_other)
@@ -97,6 +97,10 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
     ImageView imgview_EndDate_other;
 
 
+    //@Bind(R.id.tvAddContactsOther)
+    TextView tvAddContactsOther;
+
+
     String StartDate, EndDate;
     String Mem_IDs = "";
     String SELECTED_IDs = "";
@@ -104,6 +108,7 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
     String REMOVED_IDs = "";
     String message = null;
     boolean unfollow_flag = true;
+    boolean isBtnClicked = true;
 
 
     String whichDate = "", whichTime = "";
@@ -130,6 +135,7 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
     ContactListOtherModel contactListModel;
     SessionManager mSessionManager;
     UnFollowConfirmationDialog unFollowConfirmationDialog;
+    int count = 0;
 
     //Adapter
     ContactListOtherAdapter contactListAdapter;
@@ -200,6 +206,8 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
                 return false;
             }
         });
+
+        tvAddContactsOther = (TextView) view.findViewById(R.id.tvAddContactsOther);
 
 
         if (Constants.ISDIALOGOPEN) {
@@ -272,6 +280,39 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
             editText_duration_follow_other.setText(mSessionManager.getStringData(Constants.USER_DURATION_other));
         }
 
+        tvAddContactsOther.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvAddContactsOther.setClickable(false);
+                tvAddContactsOther.setEnabled(false);
+
+                //Toast.makeText(getActivity(), "Other Btn Clicked " + count, Toast.LENGTH_SHORT).show();
+
+                if (count == 0) {
+                    //Toast.makeText(getActivity(), "Other Btn Clicked Inside " + count, Toast.LENGTH_SHORT).show();
+                    count++;
+                    isBtnClicked = false;
+
+                   if (android.os.Build.VERSION.SDK_INT > 22) {
+                        if (isGETACCOUNTSAllowed()) {
+                            // do your task
+                            Intent ContactIntent = new Intent(getActivity(), ContactListOtherActivity.class);
+                            startActivity(ContactIntent);
+                            ((Activity) getActivity()).overridePendingTransition(0,0);
+                            //return;
+                        } else {
+                            mSessionManager.setRequestActivity("AddSprintFollowOther");
+
+                            requestGET_ACCOUNTSPermission();
+                        }
+
+                    } else {
+                        Intent ContactIntent = new Intent(getActivity(), ContactListOtherActivity.class);
+                        startActivity(ContactIntent);
+                    }
+                }
+            }
+        });
 
         editText_Activity_follow_other.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -285,6 +326,8 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener(this);
+
+
         return view;
     }
 
@@ -305,7 +348,7 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
         Log.e("You hv selected", "You hv selected " + arrayList_ContactList.get(position).getUserID() + " " + arrayList_ContactList.get(position).getName());
 
         if (arrayList_ContactList.get(position).getstatus().equals("1")) {
-            if(unfollow_flag) {
+            if (unfollow_flag) {
                 unfollow_flag = false;
                 Log.e("unFollowConfirmationDialog", "unFollowConfirmationDialog");
                 unFollowConfirmationDialog = new UnFollowConfirmationDialog(
@@ -354,6 +397,16 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
         if (messageDialogOther != null) {
             messageDialogOther.dismiss();
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvAddContactsOther:
+
+                break;
+        }
+
     }
 
 
@@ -598,26 +651,30 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
 
     }
 
-    @OnClick(R.id.Linear_add_contact)
+   /* @OnClick(R.id.tvAddContactsOther)
     public void getContactList() {
-        Linear_add_contact.setEnabled(false);
-        if (android.os.Build.VERSION.SDK_INT > 22) {
-            if (isGETACCOUNTSAllowed()) {
-                // do your task
+        if(isBtnClicked) {
+            isBtnClicked = false;
+            *//*Linear_add_contact.setEnabled(false);
+            Linear_add_contact.setClickable(false);*//*
+            if (android.os.Build.VERSION.SDK_INT > 22) {
+                if (isGETACCOUNTSAllowed()) {
+                    // do your task
+                    Intent ContactIntent = new Intent(getActivity(), ContactListOtherActivity.class);
+                    startActivity(ContactIntent);
+                    return;
+                } else {
+                    mSessionManager.setRequestActivity("AddSprintFollowOther");
+
+                    requestGET_ACCOUNTSPermission();
+                }
+
+            } else {
                 Intent ContactIntent = new Intent(getActivity(), ContactListOtherActivity.class);
                 startActivity(ContactIntent);
-                return;
-            } else {
-                mSessionManager.setRequestActivity("AddSprintFollowOther");
-
-                requestGET_ACCOUNTSPermission();
             }
-
-        } else {
-            Intent ContactIntent = new Intent(getActivity(), ContactListOtherActivity.class);
-            startActivity(ContactIntent);
         }
-    }
+    }*/
 
 
     @OnClick(R.id.imgview_StartDate_other)
@@ -732,7 +789,7 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
             super.onCancel(dialog);
             imgview_StartDate_other.setEnabled(true);
             imgview_EndDate_other.setEnabled(true);
-           // unlockScreenOrientation();
+            // unlockScreenOrientation();
         }
 
         public void onDateSet(DatePicker view, int yy, int mm, int dd) {
@@ -816,7 +873,7 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
             super.onCancel(dialog);
             imgview_StartDate_other.setEnabled(true);
             imgview_EndDate_other.setEnabled(true);
-           // unlockScreenOrientation();
+            // unlockScreenOrientation();
         }
 
         @Override
@@ -861,7 +918,7 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
                 finalmin = minute;
                 int sec = 00;
                 StartCal.set(finalyear, finalmonth, finalday, hourOfDay, minute, sec);
-                Selected_Cal.set(finalyear, finalmonth-1, finalday, hourOfDay, minute, sec);
+                Selected_Cal.set(finalyear, finalmonth - 1, finalday, hourOfDay, minute, sec);
 
                 Calendar SelectedCal = Calendar.getInstance();
                 SelectedCal.set(finalyear, finalmonth - 1, finalday, hourOfDay, minute, sec);
@@ -1329,7 +1386,7 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
 
         Log.e("$$$$$$$$$", "$$$$$$$$$" + "StartCal " + StartCal.getTime() + " EndCal " + EndCal.getTime());
 
-       // lockScreenOrientation();
+        // lockScreenOrientation();
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         // Tag used to cancel the request
@@ -1597,7 +1654,8 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
     @Override
     public void onResume() {
         super.onResume();
-        Linear_add_contact.setEnabled(true);
+       /* Linear_add_contact.setEnabled(true);
+        Linear_add_contact.setClickable(true);*/
         if (!mSessionManager.getStringData(Constants.USER_START_TIME_other).equals("")) {
             txt_StartDate_other.setText(mSessionManager.getStringData(Constants.USER_START_TIME_other));
 
@@ -1657,7 +1715,6 @@ public class AddSprintFollowOtherFragment extends Fragment implements View.OnKey
 
         arrayList_ContactList = new ArrayList<ContactListOtherModel>();
         //arrayList_ContactList.clear();
-
 
 
         if (Constants.TOTAL_CONTACTS_SELECTED_OTHER > 0) {

@@ -67,23 +67,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:padding="10dp"
+                    android:orientation="horizontal"
 
-                    android:orientation="horizontal">
+                    android:padding="10dp">
 
-                    <ImageView
-                        android:id="@+id/imageview_add_contact_follow_me"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@mipmap/add_contact" />
+                    <!-- <ImageView
+                         android:id="@+id/imageview_add_contact_follow_me"
+                         android:layout_width="25dp"
+                         android:layout_height="25dp"
+                         android:layout_marginRight="8dp"
+                         android:background="@mipmap/add_contact" />-->
 
                     <TextView
+                        android:id="@+id/tvAddContactsMe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="@string/text_add_contact"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/color_blue"
+                        android:textColorHint="@color/color_blue"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -131,77 +134,69 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/margin_20">
+                android:layout_marginTop="@dimen/margin_20"
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                  >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/txt_StartDate_me"
-                        style="@style/style_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_10"
                         android:layout_marginLeft="@dimen/margin_10"
                         android:layout_marginRight="@dimen/margin_10"
-
                         android:background="@drawable/border_gray_edittext"
                         android:gravity="center_vertical"
                         android:hint="@string/text_StartDateAndTime"
-                        android:paddingLeft="5dp"/>
+                        android:paddingLeft="@dimen/padding_10" />
 
 
                     <ImageView
                         android:id="@+id/imgview_StartDate_me"
                         android:layout_width="40dp"
-                        android:layout_marginRight="@dimen/margin_10"
                         android:layout_height="40dp"
-                        android:background="@drawable/alarm_add"
-                       android:layout_alignParentRight="true"/>
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:background="@drawable/alarm_add" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                   >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/txt_EndDate_me"
-                        style="@style/style_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_10"
+
                         android:layout_marginLeft="@dimen/margin_10"
                         android:layout_marginRight="@dimen/margin_10"
-
                         android:background="@drawable/border_gray_edittext"
                         android:gravity="center_vertical"
                         android:hint="@string/text_EndDateAndTime"
-                        android:paddingLeft="5dp"/>
+                        android:paddingLeft="@dimen/padding_10" />
 
                     <ImageView
                         android:id="@+id/imgview_EndDate_me"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/margin_10"
-                        android:background="@drawable/alarm_add"
-                        android:layout_alignParentRight="true"/>
+                        android:background="@drawable/alarm_add" />
 
 
                 </RelativeLayout>
 
 
-
             </LinearLayout>
-
 
 
             <EditText
@@ -214,9 +209,9 @@
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginTop="@dimen/margin_20"
                 android:background="@drawable/border_gray_edittext"
+                android:editable="false"
                 android:gravity="center_vertical"
                 android:hint="@string/text_Duration"
-                android:editable="false"
                 android:paddingLeft="5dp" />
 
 

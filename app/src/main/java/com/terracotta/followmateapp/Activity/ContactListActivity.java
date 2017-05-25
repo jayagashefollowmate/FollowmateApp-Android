@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -64,8 +65,8 @@ public class ContactListActivity extends AppCompatActivity {
     @Bind(R.id.listview_contact_list)
     ListView listview_contact_list;
 
-    @Bind(R.id.textview_message)
-    TextView textview_message;
+    @Bind(R.id.textview_messageME)
+    TextView textview_messageME;
 
     //font
     Typeface roboto;
@@ -86,6 +87,7 @@ public class ContactListActivity extends AppCompatActivity {
     JSONObject obj;
     JSONArray array;
     ProgressDialog pDialog;
+    Cursor cur;
 
 
     ArrayList<ContactListMeModel> contactListMeModels;
@@ -99,15 +101,6 @@ public class ContactListActivity extends AppCompatActivity {
         mSessionManager.putStringData(Constants.LAST_VISITED, Constants.ACTIVITY_ADD_SPRINT_ME);
         setFont();
 
-
-        pDialog = new ProgressDialog(ContactListActivity.this);
-
-        pDialog.setMessage("Getting Contacts...");
-        pDialog.setCancelable(false);
-        pDialog.show();
-
-        readContacts();
-
         contactListMeModels = new ArrayList<>();
         contactListMeModels = getIntent().getParcelableArrayListExtra("ContactList");
         //contactListMeModels = Constants.arrayList_ContactList_toShow;
@@ -115,6 +108,7 @@ public class ContactListActivity extends AppCompatActivity {
 
 
         Constants.WHICH_CONTACT_LIST = "ContactListActivity";
+
 
         WhichActivity = getIntent().getStringExtra("WhichActivity");
         Log.e("WhichActivity", "WhichActivity " + WhichActivity);
@@ -132,6 +126,7 @@ public class ContactListActivity extends AppCompatActivity {
         }
         // readContacts();
 
+        new getContactsFromPhoneAsyncTask().execute();
 
         if (Constants.ISDIALOGOPEN) {
 
@@ -146,18 +141,52 @@ public class ContactListActivity extends AppCompatActivity {
             mSessionManager.putStringData(Constants.DIALOGMESSAGE, mSessionManager.getStringData(Constants.DIALOGMESSAGE));
             mSessionManager.putStringData(Constants.DIALOGCLASS, ContactListActivity.this.getClass().getSimpleName());
         }
+    }
+
+    private class getContactsFromPhoneAsyncTask extends AsyncTask<String, Integer, String> {
+
+        String fromWhich = "";
+        protected void onPreExecute() {
+
+            pDialog = new ProgressDialog(ContactListActivity.this);
+            pDialog.setMessage("Getting Contacts...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+            Log.e("onPreExecute", "onPreExecute");
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            // TODO Auto-generated method stub
+
+            readContacts();
 
 
-        //  getFollowmateContactList();
+            return "";
+        }
+
+        protected void onPostExecute(String response) {
+            Log.e("onPostExecute", "onPostExecute");
+            //pDialog.dismiss();
+
+            if (cur.getCount() > 0) {
+                getFollowmateContactList();
+            } else {
+                pDialog.dismiss();
+                //unlockScreenOrientation();
+                Toast.makeText(ContactListActivity.this, "No Contacts available", Toast.LENGTH_LONG).show();
+            }
+
+        }
+
     }
 
 
     public void readContacts() {
         try {
 
-
             ContentResolver cr = getContentResolver();
-            Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
+            cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                     null, null, null, null);
             String phone = null;
             obj = new JSONObject();
@@ -203,13 +232,7 @@ public class ContactListActivity extends AppCompatActivity {
             }
             System.out.println(obj.toString());
 
-            if (cur.getCount() > 0) {
-                getFollowmateContactList();
-            } else {
-                pDialog.dismiss();
-                //unlockScreenOrientation();
-                Toast.makeText(ContactListActivity.this, "No Contacts available", Toast.LENGTH_LONG).show();
-            }
+
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -276,11 +299,11 @@ public class ContactListActivity extends AppCompatActivity {
 
 
                         if (counter == UserData.length()) {
-                            textview_message.setVisibility(View.VISIBLE);
+                            textview_messageME.setVisibility(View.VISIBLE);
                             listview_contact_list.setVisibility(View.GONE);
                             button_confirm.setVisibility(View.GONE);
                         } else if (WhichActivity.equals("FollowMe")) {
-                            textview_message.setVisibility(View.GONE);
+                            textview_messageME.setVisibility(View.GONE);
                             listview_contact_list.setVisibility(View.VISIBLE);
                             button_confirm.setVisibility(View.VISIBLE);
                             contactListAdapter = new ContactListMeAdapter(ContactListActivity.this,

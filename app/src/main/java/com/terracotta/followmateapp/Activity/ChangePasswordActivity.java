@@ -608,7 +608,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
                     mSessionManager.putBooleanData(
                             Constants.KEY_REMEMBER_ME, true);
-                    Intent Dashboard = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
+                    //Intent Dashboard = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
+                    Intent Dashboard = new Intent(ChangePasswordActivity.this, Dashboard.class);
                     startActivity(Dashboard);
                     dismiss();
 
