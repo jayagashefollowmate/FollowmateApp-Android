@@ -111,7 +111,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-// hello all
+// committed code
     @Bind(R.id.edittext_email)
     EditText editText_email;
     EditText editText_password;
