@@ -1,6 +1,5 @@
 package com.terracotta.followmateapp;
 
-import android.*;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -26,7 +25,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -43,7 +41,6 @@ import com.terracotta.followmateapp.Activity.LoginActivity;
 import com.terracotta.followmateapp.Activity.NotificationActivity;
 import com.terracotta.followmateapp.Activity.ProfileActivity;
 import com.terracotta.followmateapp.Activity.SignUpActivity;
-import com.terracotta.followmateapp.gmailintegration.GmailInfoActivity;
 import com.terracotta.followmateapp.utility.AndroidUtils;
 import com.terracotta.followmateapp.utility.ConnectionDetector;
 import com.terracotta.followmateapp.utility.Constants;
@@ -156,7 +153,7 @@ public class SplashActivity extends AppCompatActivity {
 
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(SplashActivity.this,
-                        new String[]{android.Manifest.permission.READ_PHONE_STATE}, 123);
+                        new String[]{Manifest.permission.READ_PHONE_STATE}, 123);
 
 
             } else {

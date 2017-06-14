@@ -25,12 +25,12 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.terracotta.followmateapp.GCMIntentService;
-import com.terracotta.followmateapp.model.NotificationModel;
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.adapter.NotificationAdapter;
+import com.terracotta.followmateapp.model.NotificationModel;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.LocationService;
 import com.terracotta.followmateapp.utility.SessionManager;
-import com.terracotta.followmateapp.adapter.NotificationAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -175,7 +175,7 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
     @OnClick(R.id.imageview_back)
     public void onback() {
         //lockScreenOrientation();
-        Intent Dashboard = new Intent(this, Dashboard.class);
+        Intent Dashboard = new Intent(this, com.terracotta.followmateapp.Activity.Dashboard.class);
         Dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                 | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(Dashboard);

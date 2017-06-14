@@ -26,11 +26,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.terracotta.followmateapp.model.InviteContactModel;
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.adapter.InviteContactAdapter;
+import com.terracotta.followmateapp.model.InviteContactModel;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
-import com.terracotta.followmateapp.adapter.InviteContactAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

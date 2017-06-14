@@ -12,11 +12,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.terracotta.followmateapp.model.NotificationModel;
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.lazyLoader.ImageLoader;
+import com.terracotta.followmateapp.model.NotificationModel;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
-import com.terracotta.followmateapp.lazyLoader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;

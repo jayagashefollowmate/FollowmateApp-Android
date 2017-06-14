@@ -44,8 +44,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
-import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
 
@@ -728,7 +728,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     @OnClick(R.id.imageview_back)
     public void onback() {
         Constants.FinalProfileImage = null;
-        Intent Dashboard = new Intent(this, Dashboard.class);
+        Intent Dashboard = new Intent(this, com.terracotta.followmateapp.Activity.Dashboard.class);
         Dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                 | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(Dashboard);
@@ -774,7 +774,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 if (options[item].equals("Take Photo")) {
                     captureImage();
                 } else if (options[item].equals("Choose from Gallery")) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 2);
                 } else if (options[item].equals("Cancel")) {
                     dialog.dismiss();

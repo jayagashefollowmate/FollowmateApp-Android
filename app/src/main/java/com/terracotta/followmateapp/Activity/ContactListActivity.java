@@ -26,14 +26,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.adapter.ContactListMeAdapter;
+import com.terracotta.followmateapp.adapter.ContactListOtherAdapter;
 import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
 import com.terracotta.followmateapp.model.ContactListMeModel;
 import com.terracotta.followmateapp.model.ContactListOtherModel;
-import com.terracotta.followmateapp.R;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
-import com.terracotta.followmateapp.adapter.ContactListMeAdapter;
-import com.terracotta.followmateapp.adapter.ContactListOtherAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

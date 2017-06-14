@@ -41,12 +41,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.terracotta.followmateapp.Activity.ChangePasswordActivity;
-import com.terracotta.followmateapp.Activity.Dashboard;
 import com.terracotta.followmateapp.Activity.LoginActivity;
 import com.terracotta.followmateapp.Activity.ProfileActivity;
 import com.terracotta.followmateapp.Activity.VerificationActivity;
-import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
 
@@ -1177,7 +1176,7 @@ public class GmailInfoActivity extends Activity {
                 mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
                 mSessionManager.putStringData(Constants.DIALOGCLASS, "");
 
-                new android.app.AlertDialog.Builder(GmailInfoActivity.this)
+                new AlertDialog.Builder(GmailInfoActivity.this)
                         .setTitle("Alert")
                         .setMessage("Network Error, Please Try Later.")
 

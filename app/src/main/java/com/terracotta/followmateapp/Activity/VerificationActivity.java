@@ -313,7 +313,7 @@ public class VerificationActivity extends AppCompatActivity {
             mSessionManager.putStringData(Constants.LOGEDIN, "Logedin");
             //unlockScreenOrientation();
             //Login and password is valid.. so Intent to Dashboard
-            Intent Dashboard = new Intent(this, Dashboard.class);
+            Intent Dashboard = new Intent(this, com.terracotta.followmateapp.Activity.Dashboard.class);
             Dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                     | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(Dashboard);

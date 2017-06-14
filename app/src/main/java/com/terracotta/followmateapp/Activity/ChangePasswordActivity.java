@@ -30,8 +30,8 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
 
@@ -499,7 +499,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
                 mSessionManager.putBooleanData(
                         Constants.KEY_REMEMBER_ME, true);
-                Intent Dashboard = new Intent(this, Dashboard.class);
+                Intent Dashboard = new Intent(this, com.terracotta.followmateapp.Activity.Dashboard.class);
                 Dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                         | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(Dashboard);
@@ -609,7 +609,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     mSessionManager.putBooleanData(
                             Constants.KEY_REMEMBER_ME, true);
                     //Intent Dashboard = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
-                    Intent Dashboard = new Intent(ChangePasswordActivity.this, Dashboard.class);
+                    Intent Dashboard = new Intent(ChangePasswordActivity.this, com.terracotta.followmateapp.Activity.Dashboard.class);
                     startActivity(Dashboard);
                     dismiss();
 

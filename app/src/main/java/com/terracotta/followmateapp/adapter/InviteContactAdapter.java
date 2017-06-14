@@ -13,10 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.terracotta.followmateapp.model.InviteContactModel;
 import com.terracotta.followmateapp.R;
-import com.terracotta.followmateapp.utility.SessionManager;
 import com.terracotta.followmateapp.lazyLoader.ImageLoader;
+import com.terracotta.followmateapp.model.InviteContactModel;
+import com.terracotta.followmateapp.utility.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;

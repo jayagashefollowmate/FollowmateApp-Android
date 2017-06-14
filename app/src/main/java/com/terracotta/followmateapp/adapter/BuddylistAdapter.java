@@ -14,8 +14,6 @@ import com.terracotta.followmateapp.pojo.SingleUser;
 import java.util.ArrayList;
 
 
-
-
 public class BuddylistAdapter extends BaseAdapter {
 
 	private LayoutInflater inflator;

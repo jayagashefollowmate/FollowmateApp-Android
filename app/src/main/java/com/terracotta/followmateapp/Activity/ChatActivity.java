@@ -10,12 +10,12 @@ import com.inscripts.cometchat.sdk.CometChat;
 import com.inscripts.interfaces.Callbacks;
 import com.inscripts.utils.Logger;
 import com.terracotta.followmateapp.R;
-import com.terracotta.followmateapp.utility.Constants;
-import com.terracotta.followmateapp.utility.SessionManager;
 import com.terracotta.followmateapp.helper.Keys;
 import com.terracotta.followmateapp.helper.SharedPreferenceHelper;
 import com.terracotta.followmateapp.librarytestapp.LogsActivity;
 import com.terracotta.followmateapp.librarytestapp.SampleCometChatActivity;
+import com.terracotta.followmateapp.utility.Constants;
+import com.terracotta.followmateapp.utility.SessionManager;
 
 import org.json.JSONObject;
 

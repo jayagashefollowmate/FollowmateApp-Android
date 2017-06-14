@@ -19,10 +19,10 @@ import com.inscripts.enums.StatusOption;
 import com.inscripts.interfaces.Callbacks;
 import com.inscripts.utils.Logger;
 import com.terracotta.followmateapp.R;
-import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.helper.DatabaseHandler;
 import com.terracotta.followmateapp.helper.Keys.SharedPreferenceKeys;
 import com.terracotta.followmateapp.helper.SharedPreferenceHelper;
+import com.terracotta.followmateapp.utility.Constants;
 
 import org.json.JSONObject;
 

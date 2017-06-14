@@ -35,8 +35,6 @@ import com.inscripts.interfaces.Callbacks;
 import com.inscripts.interfaces.SubscribeChatroomCallbacks;
 import com.inscripts.utils.Logger;
 import com.terracotta.followmateapp.R;
-import com.terracotta.followmateapp.utility.Constants;
-import com.terracotta.followmateapp.utility.SessionManager;
 import com.terracotta.followmateapp.adapter.ChatroomlistAdapter;
 import com.terracotta.followmateapp.helper.DatabaseHandler;
 import com.terracotta.followmateapp.helper.Keys;
@@ -46,6 +44,8 @@ import com.terracotta.followmateapp.librarytestapp.LogsActivity;
 import com.terracotta.followmateapp.librarytestapp.SampleCometChatActivity;
 import com.terracotta.followmateapp.pojo.Chatroom;
 import com.terracotta.followmateapp.pojo.ChatroomChatMessage;
+import com.terracotta.followmateapp.utility.Constants;
+import com.terracotta.followmateapp.utility.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;

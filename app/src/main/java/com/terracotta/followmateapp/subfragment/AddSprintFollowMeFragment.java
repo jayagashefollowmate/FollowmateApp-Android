@@ -13,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -47,12 +46,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.terracotta.followmateapp.Activity.ContactListActivity;
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.adapter.ContactListMeAdapter;
 import com.terracotta.followmateapp.dialog.MessageDialog;
+import com.terracotta.followmateapp.fragment.FollowFragment;
 import com.terracotta.followmateapp.model.ContactListMeModel;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
-import com.terracotta.followmateapp.adapter.ContactListMeAdapter;
-import com.terracotta.followmateapp.fragment.FollowFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -127,7 +126,7 @@ public class AddSprintFollowMeFragment extends Fragment implements View.OnKeyLis
 
     String TAG = "FollowMate";
     String message = null;
-    android.text.format.DateFormat df = new android.text.format.DateFormat();
+    DateFormat df = new DateFormat();
     String Mem_IDs = "";
     String SELECTED_IDs = "";
     String NEW_IDs = "";

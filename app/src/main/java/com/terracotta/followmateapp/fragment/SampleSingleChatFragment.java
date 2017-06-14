@@ -46,14 +46,14 @@ import com.inscripts.interfaces.Callbacks;
 import com.inscripts.interfaces.EmojiClickInterface;
 import com.inscripts.utils.Logger;
 import com.terracotta.followmateapp.R;
-import com.terracotta.followmateapp.utility.Constants;
-import com.terracotta.followmateapp.utility.SessionManager;
 import com.terracotta.followmateapp.adapter.SingleChatAdapter;
 import com.terracotta.followmateapp.helper.DatabaseHandler;
 import com.terracotta.followmateapp.helper.Keys;
 import com.terracotta.followmateapp.helper.SharedPreferenceHelper;
 import com.terracotta.followmateapp.helper.Utils;
 import com.terracotta.followmateapp.pojo.SingleChatMessage;
+import com.terracotta.followmateapp.utility.Constants;
+import com.terracotta.followmateapp.utility.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;

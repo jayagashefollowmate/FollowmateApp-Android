@@ -7,10 +7,10 @@ package com.terracotta.followmateapp.gmailintegration;
  * @AbstractGetNameTask Display personalized greeting. This class contains boilerplate code to
  * consume the token but isn't integral to getting the tokens.
  */
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 

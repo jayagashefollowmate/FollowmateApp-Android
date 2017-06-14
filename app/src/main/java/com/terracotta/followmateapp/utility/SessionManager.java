@@ -41,7 +41,7 @@ public class SessionManager {
     }
 
     public void setStartflagMe(boolean flage) {
-        SharedPreferences.Editor pref = getPref().edit();
+        Editor pref = getPref().edit();
         pref.putBoolean("StartflagMe", flage);
         pref.commit();
     }
@@ -51,7 +51,7 @@ public class SessionManager {
     }
 
     public void setStartflagOther(boolean flage) {
-        SharedPreferences.Editor pref = getPref().edit();
+        Editor pref = getPref().edit();
         pref.putBoolean("StartflagOther", flage);
         pref.commit();
     }
@@ -61,7 +61,7 @@ public class SessionManager {
     }
 
     public void setRequestActivity(String RequestActivity) {
-        SharedPreferences.Editor pref = getPref().edit();
+        Editor pref = getPref().edit();
         pref.putString("RequestActivity", RequestActivity);
         pref.commit();
     }

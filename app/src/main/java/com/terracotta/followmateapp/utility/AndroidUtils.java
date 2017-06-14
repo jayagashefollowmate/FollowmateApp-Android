@@ -1,6 +1,5 @@
 package com.terracotta.followmateapp.utility;
 
-import android.content.Context;
 import android.graphics.Color;
 
 import com.terracotta.followmateapp.SplashActivity;

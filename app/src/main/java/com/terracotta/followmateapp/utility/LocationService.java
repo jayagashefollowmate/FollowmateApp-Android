@@ -98,6 +98,7 @@ public class LocationService extends Service {
         }
 
 
+
         @Override
         public void onProviderDisabled(String provider) {
             Log.e(TAG, "onProviderDisabled: " + provider);
@@ -124,6 +125,12 @@ public class LocationService extends Service {
         return null;
     }
 
+   /* @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_NOT_STICKY;
+    }*/
+
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
@@ -145,7 +152,6 @@ public class LocationService extends Service {
 
 
                         mSessionManager = new SessionManager(getApplicationContext());
-
 
                         Log.e("Location Service ", "ISSPRINT_START Me" + mSessionManager.getStartflagMe());
                         Log.e("Location Service ", "ISSPRINT_START Other" + mSessionManager.getStartflagOther());
@@ -188,7 +194,7 @@ public class LocationService extends Service {
             }
         }, 1000);
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override

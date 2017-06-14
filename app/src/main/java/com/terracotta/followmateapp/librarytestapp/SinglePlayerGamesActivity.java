@@ -33,7 +33,7 @@ public class SinglePlayerGamesActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_player_games);
         webView = (WebView) findViewById(R.id.games_webview);
-        cometChat = CometChat.getInstance(getApplicationContext(),SharedPreferenceHelper.get(Keys.SharedPreferenceKeys.API_KEY));
+        cometChat = CometChat.getInstance(getApplicationContext(), SharedPreferenceHelper.get(Keys.SharedPreferenceKeys.API_KEY));
         pBar = (ProgressBar) findViewById(com.inscripts.R.id.progressBarWebView);
         webView.setWebChromeClient(new WebChromeClient() {
 

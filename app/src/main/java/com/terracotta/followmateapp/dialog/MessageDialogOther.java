@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.subfragment.AddSprintFollowOtherFragment;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
-import com.terracotta.followmateapp.subfragment.AddSprintFollowOtherFragment;
 
 /**
  * Created by aspl31 on 3/10/16.

@@ -9,7 +9,6 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.widget.ImageView;
 
-
 import com.terracotta.followmateapp.R;
 
 import java.io.File;

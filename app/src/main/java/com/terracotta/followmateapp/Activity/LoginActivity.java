@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
@@ -69,18 +68,17 @@ import com.google.android.gms.common.api.Status;
 import com.inscripts.cometchat.sdk.CometChat;
 import com.inscripts.interfaces.Callbacks;
 import com.inscripts.utils.Logger;
+import com.terracotta.followmateapp.R;
 import com.terracotta.followmateapp.dialog.ForgotPassword;
 import com.terracotta.followmateapp.dialog.MessageFragmentDialog;
-import com.terracotta.followmateapp.R;
-import com.terracotta.followmateapp.gmailintegration.GmailInfoActivity;
-import com.terracotta.followmateapp.utility.AndroidUtils;
-import com.terracotta.followmateapp.utility.ConnectionDetector;
-import com.terracotta.followmateapp.utility.Constants;
-import com.terracotta.followmateapp.utility.SessionManager;
 import com.terracotta.followmateapp.gmailintegration.GmailStartActivity;
 import com.terracotta.followmateapp.helper.Keys;
 import com.terracotta.followmateapp.helper.SharedPreferenceHelper;
 import com.terracotta.followmateapp.librarytestapp.LogsActivity;
+import com.terracotta.followmateapp.utility.AndroidUtils;
+import com.terracotta.followmateapp.utility.ConnectionDetector;
+import com.terracotta.followmateapp.utility.Constants;
+import com.terracotta.followmateapp.utility.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,10 +111,11 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-
+// hello all
     @Bind(R.id.edittext_email)
     EditText editText_email;
     EditText editText_password;
+
     /* @Bind(R.id.checkbox_remember_me)
      CheckBox checkbox_remember_me;*/
     @Bind(R.id.textview_forgotpassword)
@@ -469,7 +468,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private boolean isGETACCOUNTSAllowed() {
         //Getting the permission status
-        int result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.GET_ACCOUNTS);
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS);
 
         //If permission is granted returning true
         if (result == PackageManager.PERMISSION_GRANTED)
@@ -482,13 +481,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     //if you don't have the permission then Requesting for permission
     private void requestGET_ACCOUNTSPermission() {
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.GET_ACCOUNTS)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.GET_ACCOUNTS)) {
 
 
         }
 
         //And finally ask for the permission
-        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.GET_ACCOUNTS}, REQUEST_GET_ACCOUNT);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.GET_ACCOUNTS}, REQUEST_GET_ACCOUNT);
     }
 
     @Override
@@ -578,7 +577,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         // check if SIM SERIAL NUMBER is changed then redirect to profile activity
         if(USER_SIM_SERIAL_NO.equals(mSessionManager.getStringData(Constants.SIM_SERIAL_NO))) {
-            Intent Dashboard = new Intent(LoginActivity.this, Dashboard.class);
+            Intent Dashboard = new Intent(LoginActivity.this, com.terracotta.followmateapp.Activity.Dashboard.class);
             Dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                     | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(Dashboard);
@@ -822,7 +821,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();*/
 
-                Toast.makeText(LoginActivity.this, "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this, "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
 
 
             }
@@ -1173,7 +1172,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 //                                startActivity(Dashboard);
 
                                 if(USER_SIM_SERIAL_NO.equals(mSessionManager.getStringData(Constants.SIM_SERIAL_NO))) {
-                                    Intent Dashboard = new Intent(LoginActivity.this, Dashboard.class);
+                                    Intent Dashboard = new Intent(LoginActivity.this, com.terracotta.followmateapp.Activity.Dashboard.class);
                                     Dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                                             | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(Dashboard);
@@ -1263,7 +1262,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 mSessionManager.putStringData(Constants.DIALOGCLASS, "");
 
 
-                Toast.makeText(LoginActivity.this, "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this, "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
 
 
             }
@@ -1605,7 +1604,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 mSessionManager.putStringData(Constants.DIALOGMESSAGE, "");
                 mSessionManager.putStringData(Constants.DIALOGCLASS, "");
 
-                Toast.makeText(LoginActivity.this, "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this, "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
 
 
             }
@@ -1779,7 +1778,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 mSessionManager.putStringData(Constants.DIALOGCLASS, "");
 
 
-                Toast.makeText(LoginActivity.this, "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this, "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
 
 
             }

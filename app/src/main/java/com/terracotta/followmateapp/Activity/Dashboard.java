@@ -3,7 +3,6 @@ package com.terracotta.followmateapp.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -26,15 +25,14 @@ import com.inscripts.cometchat.sdk.CometChat;
 import com.inscripts.interfaces.Callbacks;
 import com.inscripts.utils.Logger;
 import com.terracotta.followmateapp.R;
-import com.terracotta.followmateapp.utility.Constants;
-import com.terracotta.followmateapp.utility.SessionManager;
-import com.terracotta.followmateapp.fragment.ChatFragment;
 import com.terracotta.followmateapp.fragment.FollowFragment;
 import com.terracotta.followmateapp.fragment.MapMainFragment;
 import com.terracotta.followmateapp.helper.Keys;
 import com.terracotta.followmateapp.helper.SharedPreferenceHelper;
 import com.terracotta.followmateapp.librarytestapp.LogsActivity;
 import com.terracotta.followmateapp.librarytestapp.UsersListActivity;
+import com.terracotta.followmateapp.utility.Constants;
+import com.terracotta.followmateapp.utility.SessionManager;
 
 import org.json.JSONObject;
 

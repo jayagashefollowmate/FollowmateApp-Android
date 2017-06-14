@@ -45,13 +45,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.terracotta.followmateapp.Activity.ContactListOtherActivity;
-import com.terracotta.followmateapp.dialog.MessageDialogOther;
-import com.terracotta.followmateapp.model.ContactListOtherModel;
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.adapter.ContactListOtherAdapter;
+import com.terracotta.followmateapp.dialog.MessageDialogOther;
+import com.terracotta.followmateapp.fragment.FollowFragment;
+import com.terracotta.followmateapp.model.ContactListOtherModel;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.SessionManager;
-import com.terracotta.followmateapp.adapter.ContactListOtherAdapter;
-import com.terracotta.followmateapp.fragment.FollowFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;

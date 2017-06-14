@@ -26,12 +26,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.terracotta.followmateapp.R;
-import com.terracotta.followmateapp.utility.Constants;
-import com.terracotta.followmateapp.utility.SessionManager;
 import com.terracotta.followmateapp.subfragment.AddSprintFollowMeFragment;
 import com.terracotta.followmateapp.subfragment.AddSprintFollowOtherFragment;
 import com.terracotta.followmateapp.subfragment.SprintListFollowMeFragment;
 import com.terracotta.followmateapp.subfragment.SprintListFollowOtherFragment;
+import com.terracotta.followmateapp.utility.Constants;
+import com.terracotta.followmateapp.utility.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;

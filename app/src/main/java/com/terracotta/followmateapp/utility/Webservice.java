@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;

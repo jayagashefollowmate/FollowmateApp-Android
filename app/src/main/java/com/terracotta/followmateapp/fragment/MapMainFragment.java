@@ -3,15 +3,11 @@ package com.terracotta.followmateapp.fragment;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
@@ -29,10 +25,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.InflateException;
@@ -63,17 +56,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
-import com.terracotta.followmateapp.Activity.Dashboard;
 import com.terracotta.followmateapp.Activity.ProfileActivity;
-import com.terracotta.followmateapp.model.MarkerPointsModel;
 import com.terracotta.followmateapp.R;
+import com.terracotta.followmateapp.model.MarkerPointsModel;
 import com.terracotta.followmateapp.utility.Constants;
 import com.terracotta.followmateapp.utility.DirectionsJSONParser;
 import com.terracotta.followmateapp.utility.SessionManager;
@@ -637,7 +628,7 @@ public class MapMainFragment extends android.support.v4.app.Fragment implements 
                     sessionManager.putStringData(Constants.DIALOGCLASS, "");
 
                     if (getActivity() != null) {
-                        Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                   //     Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -980,7 +971,7 @@ public class MapMainFragment extends android.support.v4.app.Fragment implements 
                     sessionManager.putStringData(Constants.DIALOGMESSAGE, "");
                     sessionManager.putStringData(Constants.DIALOGCLASS, "");
                     if (getActivity() != null) {
-                        Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                    //    Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
                     }
 
 
@@ -1343,7 +1334,7 @@ public class MapMainFragment extends android.support.v4.app.Fragment implements 
                     sessionManager.putStringData(Constants.DIALOGCLASS, "");
 
                     if (getActivity() != null) {
-                        Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
                     }
 
 
@@ -1713,7 +1704,7 @@ public class MapMainFragment extends android.support.v4.app.Fragment implements 
                     sessionManager.putStringData(Constants.DIALOGCLASS, "");
 
                     if (getActivity() != null) {
-                        Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
                     }
 
 
@@ -1777,7 +1768,7 @@ public class MapMainFragment extends android.support.v4.app.Fragment implements 
                     sessionManager.putStringData(Constants.DIALOGCLASS, "");
 
                     if (getActivity() != null) {
-                        Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -2416,7 +2407,7 @@ public class MapMainFragment extends android.support.v4.app.Fragment implements 
                     sessionManager.putStringData(Constants.DIALOGCLASS, "");
 
 
-                    Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
 
 
                 }
@@ -4089,7 +4080,7 @@ public class MapMainFragment extends android.support.v4.app.Fragment implements 
                     sessionManager.putStringData(Constants.DIALOGMESSAGE, "");
                     sessionManager.putStringData(Constants.DIALOGCLASS, "");
 
-                    Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getActivity(), "Network Error, Please Try Later.", Toast.LENGTH_LONG).show();
 
 
                 }
